@@ -1,0 +1,113 @@
+<h1> TV Control API Specification</h1>
+<pre class="metadata">
+status: ED
+ED: https://github.com/w3c/tvapi
+Shortname: TVAPI
+Level: 1
+Editor: SungHei Kim, ETRI, shkim@etri.re.kr
+Editor: Alexander Futász, Fraunhofer Gesellschaft ,alexander.futasz@fokus.fraunhofer.de 
+Group: tvapi
+Abstract: The W3C TV control API is based on the technical requirements developed by W3C TV Control API CG.
+Link Defaults: HTML5 (dfn) active document / plugin / browsing context / browsing context container / parent browsing context / nested browsing contexts / top-level browsing context / plugin document / frame / sandboxing flag set / ancestor / an iframe srcdoc document / noreferrer
+Link Defaults: HTML5 (interface) document
+Link Defaults: HTML5 (element) audio / iframe / video / source / track / script
+Version History: https://github.com/w3c/tvapi/spec/index.src.html
+</pre>
+
+<h2> Introduction </h2>
+
+Note: to be constructed
+
+
+<h2> Terminology </h2>
+<UL>
+  <li><dfn>EventHandler</dfn> </h3> : The EventHandler interface represents a callback used for event handlers as defined in ![HTML5](http://www.w3.org/TR/html5/).
+</UL>
+<h2> Procedures </h2>
+The fooFunc method when invoked MUST run the following steps:
+
+<ol>
+<li>Let promise be a new Promise object and resolver be its associated resolver.
+<li>Return promise to the caller.
+<li>Make a request to the TV device to...
+<li>If an error occurs invoke resolver's reject algorithm with error as the value argument.
+<li>When the request has been successfully completed:
+ <ol>
+  <li> Invoke resolver's fulfill algorithm without assigning a value to the value argument.
+
+ </ol>
+</ol>
+
+
+<h2> Interface APIs</h2>
+<h3> Navigator Interface </h3>
+<pre class="example">
+Promise fooFunc ()
+     This method makes a request to... 
+     TVFooFuncOptions options 
+        Specifies the options for... 
+ readonly attribute TVFooAttrType fooAttr
+     MUST return... 
+ attribute EventHandler onfoofired
+     Handles the onfoofired event of type TVFooFiredEvent, fired when... 
+</pre>
+
+
+<h3> TVController Interface </h3>
+The TVController interface represents a bunch of properties and a set of operations that can be used to...
+
+<pre class="example">
+ Promise fooFunc ()
+     This method makes a request to... 
+     TVFooFuncOptions options 
+        Specifies the options for... 
+ readonly attribute TVFooAttrType fooAttr
+     MUST return... 
+ attribute EventHandler onfoofired
+     Handles the onfoofired event of type TVFooFiredEvent, fired when... 
+</pre>
+
+<h3> EventHandlers </h3>
+The following are the event handler (and their corresponding event types) that MUST be supported as attributes by the TVController object.
+
+Event handler Event name Event type Short description
+
+onfoofired foofired TVFooFiredEvent Handles the information of...
+
+<h3> TVFooFuncOptions Dictionary </h3>
+The TVFooFuncOptions dictionary contains the information for...
+
+<pre class="idl">
+dictionary TVFooAttrType {
+	DOMString fooAttr;	
+};
+</pre>
+
+
+<h3> TVFooFiredEvent Interface </h3>
+The TVFooFiredEvent interface represents the event related to...
+
+<pre class="example">
+readonly attribute <code>TVFooAttrType</code> fooAttr
+
+MUST return...
+</pre>
+
+<h3> Enumerations </h3>
+The attribute fooAttr in the TVController can have the following values:
+
+OOO
+
+To be constructed...
+
+XXX
+
+To be constructed...
+
+
+<h2> Acknowlegements</h2>
+To be constructed...
+
+
+
+
