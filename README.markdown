@@ -16,5 +16,5 @@ TV Control API Community Group
 
 * TV Control API
 	* Editor's Draft: <https://w3c.github.io/tvapi/spec>
-	* Source: <https://github.com/w3c/tvapi/tree/master/tvapi/spec>
+	* Source: <https://github.com/w3c/tvapi/tree/master/spec>
 
