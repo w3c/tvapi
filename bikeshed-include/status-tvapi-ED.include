@@ -6,21 +6,17 @@
 
 <p>
   <strong>Changes to this document may be tracked at
-  <a href="https://github.com/w3c/webappsec">https://github.com/w3c/tvapi</a>.</strong>
+  <a href="https://github.com/w3c/tvapi">https://github.com/w3c/tvapi</a>.</strong>
 
 <p>
 	The (<a href="http://lists.w3.org/Archives/Public/public-tvapi/">archived</a>) public mailing list
-	<a href="mailto:public-webappsec@w3.org?Subject=%5B[SHORTNAME]%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a>
+	<a href="mailto:public-tvapi@w3.org">public-tvapi@w3.org</a>
 	(see <a href="http://www.w3.org/Mail/Request">instructions</a>)
 	is preferred for discussion of this specification.
-	When sending e-mail,
-	please put the text “[SHORTNAME]” in the subject,
-	preferably like this:
-	“[[SHORTNAME]] <em>…summary of comment…</em>”
 
 <p>
 	This document was produced by the
-  <a href="http://www.w3.org/2011/tvapi/">TV Control API CG</a>.
+  <a href="http://www.w3.org/community/tvapi/">TV Control API CG</a>.
 
 <p>
 	This document was produced by a group operating under
