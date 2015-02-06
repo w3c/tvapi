@@ -97,6 +97,10 @@
     <p>
       Note: To be constructed.
     </p>
+    <p>
+      This specification may not only focus on video channels but also include
+      pure audio ones.
+    </p>
   </section>
 
 <!-- - - - - - - - - - - - - - - Terminology  - - - - - - - - - - - - - - - -->
@@ -447,9 +451,11 @@
             that are available in the TV source by the <code>options</code>
             parameter. It returns a new <code>Promise</code> that will be used
             to notify the caller about the result of the operation. Note that
-            this method has to be called first so that the method
-            <a><code>getChannels</code></a> can retrieve the channels that have
-            successfully been scanned by the TV source.
+            this method has to be called first at some setup stages, so that the
+            method <a><code>getChannels</code></a> can retrieve the channels
+            that have successfully been scanned by the TV source. Besides, due
+            to some constraints of tuner modules, scanning and streaming are not
+            encouraged to run at the same time.  
             <dl class='parameters'>
               <dt>optional TVStartScanningOptions options</dt>
                 <dd>
