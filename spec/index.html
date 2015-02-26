@@ -1,242 +1,1333 @@
 <!DOCTYPE html><html lang=en><head>
   <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
   <title> TV Control API Specification</title>
-  <link href=../default.css rel=stylesheet type=text/css>
-  <link href=https://www.w3.org/StyleSheets/TR/W3C-ED rel=stylesheet type=text/css>
+  <script src='https://www.w3.org/Tools/respec/respec-w3c-common' async class='remove'></script>
+  <script class="remove">
+    var respecConfig = {
+      specStatus:          "ED", // "ED",
+      shortName:           "TV Control API Specification", // needed for generated URLs
+      editors: [{
+        name: "SungHei Kim",
+        company: "ETRI",
+        mailto: "shkim@etri.re.kr"
+      }, {
+        name: "Alexander Futász",
+        company: "Fraunhofer Gesellschaft",
+        mailto: "alexander.futasz@fokus.fraunhofer.de"
+      }, {
+        name: "Sean Lin",
+        company: "Mozilla",
+        mailto: "selin@mozilla.com"
+      }, {
+        name: "Gene Lian",
+        company: "Mozilla",
+        note: "Until July 2014"
+      }],
+      publishDate:         "", // no needed for "ED" or "unofficial"
+      edDraftURI:          "https://w3c.github.io/tvapi/spec/", // needed for "ED"
+      previousPublishDate: "", // needed for "WD", "LC", "CR"
+      previousMaturity:    "", // needed for "WD", "LC", "CR"
+      lcEnd:               "", // needed for "LC"
+      crEnd:               "", // needed for "CR"
+      // wg:           "System Applications Working Group",
+      // wgURI:        "http://www.w3.org/2012/sysapps/",
+      // wgPublicList: "public-sysapps",
+      // wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/43696/status",
+      otherLinks: [{
+        key: "Version History",
+        data: [{
+          href: "https://github.com/w3c/tvapi/commits/gh-pages"
+        }]
+      }],
+      inlineCSS:    true,
+      noIDLIn:      true,
+      noIDLSorting: true,
+      copyrightStart: "2014"
+    };
+    </script>
 </head>
 <body class=h-entry>
-<div class=head>
-  <p data-fill-with=logo></p>
-  <h1 class="p-name no-ref" id=title> TV Control API Specification</h1>
-  <h2 class="no-num no-toc no-ref heading settled" id=subtitle><span class=content>Editor’s Draft,
-    <span class=dt-updated><span class=value-title title=20140902>2 September 2014</span></span></span></h2>
-  <div data-fill-with=spec-metadata><dl>
-	<dt>This version:
-	<dd><a class=u-url href=https://github.com/w3c/tvapi>https://github.com/w3c/tvapi</a>
-	<dt>Version History:
-	<dd><a href=https://github.com/w3c/tvapi/spec/index.src.html>https://github.com/w3c/tvapi/spec/index.src.html</a>
-	<dt>Editors:
-	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:shkim@etri.re.kr>SungHei Kim</a> (<span class="p-org org">ETRI</span>)
-	<dd><dd class="p-author h-card vcard"><a class="p-name fn u-email email" href=mailto:alexander.futasz@fokus.fraunhofer.de>Alexander Futász</a> (<span class="p-org org">Fraunhofer Gesellschaft</span>)
-</dl>
-</div>
-  <div data-fill-with=warning></div>
-  
-  <p class="copyright">Copyright © 2014 the Contributors to the TV Control API Specification, published by the  <a href="http://www.w3.org/community/grouphome/">Group Name</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
 
-  <hr title="Separator for header">
-</div>
+<!-- - - - - - - - - - - - - - - Abstract  - - - - - - - - - - - - - - - - - -->
+  <section id="abstract">
+    The W3C TV control API is based on the technical requirements developed by
+    W3C TV Control API CG.
+  </section>
 
-<h2 class="no-num no-toc no-ref heading settled" id=abstract><span class=content>Abstract</span></h2>
-<div class=p-summary data-fill-with=abstract><p>The W3C TV control API is based on the technical requirements developed by W3C TV Control API CG.</p>
-
-</div>
-
-<h2 class="no-num no-toc no-ref heading settled" id=status><span class=content>Status of this document</span></h2>
-<div data-fill-with=status><p>
-	This is a public copy of the editors’ draft.
-	It is provided for discussion only and may change at any moment.
-	Its publication here does not imply endorsement of its contents by W3C.
-	Don’t cite this document other than as work in progress.
-
-<p>
-  <strong>Changes to this document may be tracked at
-  <a href=https://github.com/w3c/tvapi>https://github.com/w3c/tvapi</a>.</strong>
-
-<p>
-	The (<a href=http://lists.w3.org/Archives/Public/public-tvapi/>archived</a>) public mailing list
-	<a href="mailto:public-tvapi@w3.org">public-tvapi@w3.org</a>
-	(see <a href=http://www.w3.org/Mail/Request>instructions</a>)
-	is preferred for discussion of this specification.
-
-<p>
-	This document was produced by the
-  <a href=http://www.w3.org/community/tvapi/>TV Control API CG</a>.
-
-<p>
-	This document was produced by a group operating under
-	the <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/>5 February 2004 W3C Patent Policy</a>.
-	W3C maintains a <a href=http://www.w3.org/2004/01/pp-impl/49309/status rel=disclosure>public list of any patent disclosures</a>
-	made in connection with the deliverables of the group;
-	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential>Essential Claim(s)</a>
-	must disclose the information in accordance with <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure>section 6 of the W3C Patent Policy</a>.
-</div>
-<div data-fill-with=at-risk></div>
-
-<h2 class="no-num no-toc no-ref heading settled" id=contents><span class=content>Table of contents</span></h2>
-<div data-fill-with=table-of-contents><ul class=toc>
-	<li><a href=#introduction><span class=secno>1</span>  Introduction </a>
-	<li><a href=#terminology><span class=secno>2</span>  Terminology </a>
-	<li><a href=#procedures><span class=secno>3</span>  Procedures </a>
-	<li><a href=#interface-apis><span class=secno>4</span>  Interface APIs</a>
-		<ul class=toc>
-		<li><a href=#navigator-interface><span class=secno>4.1</span>  Navigator Interface </a>
-		<li><a href=#tvcontroller-interface><span class=secno>4.2</span>  TVController Interface </a>
-		<li><a href=#eventhandlers><span class=secno>4.3</span>  EventHandlers </a>
-		<li><a href=#tvfoofuncoptions-dictionary><span class=secno>4.4</span>  TVFooFuncOptions Dictionary </a>
-		<li><a href=#tvfoofiredevent-interface><span class=secno>4.5</span>  TVFooFiredEvent Interface </a>
-		<li><a href=#enumerations><span class=secno>4.6</span>  Enumerations </a></ul>
-	<li><a href=#acknowlegements><span class=secno>5</span>  Acknowlegements</a>
-	<li><a href=#conformance><span class=secno></span>  Conformance</a>
-	<li><a href=#references><span class=secno></span>  References</a>
-		<ul class=toc>
-		<li><a href=#normative><span class=secno></span>  Normative References</a>
-		<li><a href=#informative><span class=secno></span>  Informative References</a></ul>
-	<li><a href=#index><span class=secno></span>  Index</a>
-	<li><a href=#property-index><span class=secno></span>  Property index</a></ul></div>
-
-
-
-<h2 class="heading settled" data-level=1 id=introduction><span class=secno>1 </span><span class=content> Introduction </span><a class=self-link href=#introduction></a></h2>
-
-<p class=note>Note: to be constructed</p>
-
-
-<h2 class="heading settled" data-level=2 id=terminology><span class=secno>2 </span><span class=content> Terminology </span><a class=self-link href=#terminology></a></h2>
-<ul>
-  <li><dfn data-dfn-type=dfn data-noexport="" id=eventhandler>EventHandler<a class=self-link href=#eventhandler></a></dfn>  : The EventHandler interface represents a callback used for event handlers as defined in ![HTML5](http://www.w3.org/TR/html5/).
-</ul>
-<h2 class="heading settled" data-level=3 id=procedures><span class=secno>3 </span><span class=content> Procedures </span><a class=self-link href=#procedures></a></h2>
-The fooFunc method when invoked MUST run the following steps:
-
-<ol>
-<li>Let promise be a new Promise object and resolver be its associated resolver.
-<li>Return promise to the caller.
-<li>Make a request to the TV device to...
-<li>If an error occurs invoke resolver’s reject algorithm with error as the value argument.
-<li>When the request has been successfully completed:
- <ol>
-  <li> Invoke resolver’s fulfill algorithm without assigning a value to the value argument.
-
- </ol>
-</ol>
-
-
-<h2 class="heading settled" data-level=4 id=interface-apis><span class=secno>4 </span><span class=content> Interface APIs</span><a class=self-link href=#interface-apis></a></h2>
-<h3 class="heading settled" data-level=4.1 id=navigator-interface><span class=secno>4.1 </span><span class=content> Navigator Interface </span><a class=self-link href=#navigator-interface></a></h3>
-<pre class=example>Promise fooFunc ()
-     This method makes a request to... 
-     TVFooFuncOptions options 
-        Specifies the options for... 
- readonly attribute TVFooAttrType fooAttr
-     MUST return... 
- attribute EventHandler onfoofired
-     Handles the onfoofired event of type TVFooFiredEvent, fired when... 
-</pre>
-
-
-<h3 class="heading settled" data-level=4.2 id=tvcontroller-interface><span class=secno>4.2 </span><span class=content> TVController Interface </span><a class=self-link href=#tvcontroller-interface></a></h3>
-The TVController interface represents a bunch of properties and a set of operations that can be used to...
-
-<pre class=example>Promise fooFunc ()
-    This method makes a request to... 
-    TVFooFuncOptions options 
-       Specifies the options for... 
-readonly attribute TVFooAttrType fooAttr
-    MUST return... 
-attribute EventHandler onfoofired
-    Handles the onfoofired event of type TVFooFiredEvent, fired when... 
-</pre>
-
-<h3 class="heading settled" data-level=4.3 id=eventhandlers><span class=secno>4.3 </span><span class=content> EventHandlers </span><a class=self-link href=#eventhandlers></a></h3>
-The following are the event handler (and their corresponding event types) that MUST be supported as attributes by the TVController object.
-
-<p>Event handler Event name Event type Short description</p>
-
-<p>onfoofired foofired TVFooFiredEvent Handles the information of...</p>
-
-<h3 class="heading settled" data-level=4.4 id=tvfoofuncoptions-dictionary><span class=secno>4.4 </span><span class=content> TVFooFuncOptions Dictionary </span><a class=self-link href=#tvfoofuncoptions-dictionary></a></h3>
-The TVFooFuncOptions dictionary contains the information for...
-
-<pre class=idl>dictionary <dfn class=idl-code data-dfn-type=dictionary data-export="" data-global-name="" id=dictdef-tvfooattrtype>TVFooAttrType<a class=self-link href=#dictdef-tvfooattrtype></a></dfn> {
-  DOMString <dfn class=idl-code data-dfn-for=TVFooAttrType data-dfn-type=attribute data-export="" data-global-name="TVFooAttrType<interface>/fooattr<attribute>" data-type="DOMString " id=dom-tvfooattrtype-fooattr>fooAttr<a class=self-link href=#dom-tvfooattrtype-fooattr></a></dfn>;  
-};
-</pre>
-
-
-<h3 class="heading settled" data-level=4.5 id=tvfoofiredevent-interface><span class=secno>4.5 </span><span class=content> TVFooFiredEvent Interface </span><a class=self-link href=#tvfoofiredevent-interface></a></h3>
-The TVFooFiredEvent interface represents the event related to...
-
-<pre class=example>readonly attribute <code>TVFooAttrType</code> fooAttr
-
-MUST return...
-</pre>
-
-<h3 class="heading settled" data-level=4.6 id=enumerations><span class=secno>4.6 </span><span class=content> Enumerations </span><a class=self-link href=#enumerations></a></h3>
-The attribute fooAttr in the TVController can have the following values:
-
-<p>OOO</p>
-
-<p>To be constructed...</p>
-
-<p>XXX</p>
-
-<p>To be constructed...</p>
-
-
-<h2 class="heading settled" data-level=5 id=acknowlegements><span class=secno>5 </span><span class=content> Acknowlegements</span><a class=self-link href=#acknowlegements></a></h2>
-To be constructed...
-
-
-
-
-
-<h2 class="no-ref no-num heading settled" id=conformance><span class=content>
-Conformance</span><a class=self-link href=#conformance></a></h2>
+<!-- - - - - - - - - - - - - - - Status of this document - - - - - - - - - - -->
+  <section id="sotd">
+    This is a public copy of the editors’ draft.
+    It is provided for discussion only and may change at any moment.
+    Its publication here does not imply endorsement of its contents by W3C.
+    Don’t cite this document other than as work in progress.
 
     <p>
-        Conformance requirements are expressed with a combination of descriptive assertions and RFC 2119 terminology.
-        The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
-        in the normative parts of this document
-        are to be interpreted as described in RFC 2119.
-        However, for readability,
-        these words do not appear in all uppercase letters in this specification.
+      <strong>Changes to this document may be tracked at
+      <a href=https://github.com/w3c/tvapi>https://github.com/w3c/tvapi</a>.</strong>
+    </p>
 
     <p>
-        All of the text of this specification is normative
-        except sections explicitly marked as non-normative, examples, and notes. <a data-biblio-type=normative data-link-type=biblio href=#biblio-rfc2119 title=biblio-RFC2119>[RFC2119]</a>
+      The (<a href=http://lists.w3.org/Archives/Public/public-tvapi/>archived</a>)
+      public mailing list <a href="mailto:public-tvapi@w3.org">public-tvapi@w3.org</a>
+      (see <a href=http://www.w3.org/Mail/Request>instructions</a>)
+      is preferred for discussion of this specification.
+    </p>
 
     <p>
-        Examples in this specification are introduced with the words “for example”
-        or are set apart from the normative text with <code>class="example"</code>, like this:
-
-    <div class=example>
-        This is an example of an informative example.
-    </div>
+      This document was produced by the
+      <a href=http://www.w3.org/community/tvapi/>TV Control API CG</a>.
+    </p>
 
     <p>
-        Informative notes begin with the word “Note”
-        and are set apart from the normative text with <code>class="note"</code>, like this:
+      This document was produced by a group operating under the
+      <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/>5 February 2004 W3C Patent Policy</a>.
+      W3C maintains a <a href=http://www.w3.org/2004/01/pp-impl/49309/status rel=disclosure>public list of any patent disclosures</a>
+      made in connection with the deliverables of the group; that page also
+      includes instructions for disclosing a patent. An individual who has
+      actual knowledge of a patent which the individual believes contains
+      <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential>Essential Claim(s)</a>
+      must disclose the information in accordance with
+      <a href=http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure>section 6 of the W3C Patent Policy</a>.
+    </p>
+  </section>
 
-    <p class=note>
-        Note, this is an informative note.
+<!-- - - - - - - - - - - - - - - Introduction  - - - - - - - - - - - - - - - -->
+  <section class="informative">
+    <h2>Introduction</h2>
+    <p>
+      Note: To be constructed.
+    </p>
+    <p>
+      This specification may not only focus on video channels but also include
+      pure audio ones.
+    </p>
+  </section>
 
-<h2 class="no-num no-ref heading settled" id=references><span class=content>
-References</span><a class=self-link href=#references></a></h2>
+<!-- - - - - - - - - - - - - - - Terminology  - - - - - - - - - - - - - - - -->
+    <section>
+      <h2>Terminology</h2>
+      <p>
+        The <dfn><a
+        href="http://dev.w3.org/html5/spec/webappapis.html#eventhandler">
+        EventHandler</a></dfn> interface represents a callback used for event
+        handlers as defined in [[!HTML5]].
+      </p>
 
-<h3 class="no-num no-ref heading settled" id=normative><span class=content>
-Normative References</span><a class=self-link href=#normative></a></h3>
-<div data-fill-with=normative-references><dl>
-<dt id=biblio-rfc2119 title=RFC2119><a class=self-link href=#biblio-rfc2119></a>[RFC2119]<dd>S. Bradner. <a href=http://www.ietf.org/rfc/rfc2119.txt>Key words for use in RFCs to Indicate Requirement Levels</a>. URL: <a href=http://www.ietf.org/rfc/rfc2119.txt>http://www.ietf.org/rfc/rfc2119.txt</a></dd>
-</dl></div>
+      <p>
+        The concepts <dfn><a
+        href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task"> queue
+        a task</a></dfn> and <dfn><a
+        href="http://dev.w3.org/html5/spec/webappapis.html#fire-a-simple-event">
+        fire an event</a></dfn> are defined in [[!HTML5]].
+      </p>
 
-<h3 class="no-num no-ref heading settled" id=informative><span class=content>
-Informative References</span><a class=self-link href=#informative></a></h3>
-<div data-fill-with=informative-references><dl>
-</dl></div>
+      <p>
+        The terms <a
+        href="http://dev.w3.org/html5/spec/webappapis.html#event-handlers"><dfn
+        id="dfn-eventhandler">event handler</dfn></a> and <a
+        href="http://dev.w3.org/html5/spec/webappapis.html#event-handler-event-type">
+        <dfn id="dfn-eventtypes"> event handler event types</dfn></a> are
+        defined in [[!HTML5]].
+      </p>
 
-<h2 class="no-num no-ref heading settled" id=index><span class=content>
-Index</span><a class=self-link href=#index></a></h2>
-<div data-fill-with=index><ul class=indexlist>
-<li>EventHandler, <a href=#eventhandler title="section 2">2</a>
-<li>fooAttr, <a href=#dom-tvfooattrtype-fooattr title="section 4.4">4.4</a>
-<li>TVFooAttrType, <a href=#dictdef-tvfooattrtype title="section 4.4">4.4</a>
-</ul></div>
+      <p>
+        The <dfn><a href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-objects">Promise</a></dfn>
+        interface, the concepts of a <a href=
+        "http://people.mozilla.org/~jorendorff/es6-draft.html#sec-promise-resolve-functions"><dfn>resolver</dfn></a>, a
+        <dfn id="dfn-fulfill-algorithm"><a
+        href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-fulfillpromise"> resolver's
+        fulfill algorithm</a></dfn> and a <dfn id="dfn-reject-algorithm"><a
+        href="http://people.mozilla.org/~jorendorff/es6-draft.html#sec-rejectpromise"> resolver's
+        reject algorithm</a></dfn> are defined in [[ECMAScript]].
+      </p>
 
-<h2 class="no-num no-ref heading settled" id=property-index><span class=content>
-Property index</span><a class=self-link href=#property-index></a></h2>
-<div data-fill-with=property-index><p>No properties defined.</div>
+      <p>
+        The <dfn><a href="http://www.w3.org/TR/mediacapture-streams/#mediastream">MediaStream</a></dfn>
+        interface is defined in [[MediaCapture-Streams]].
+      </p>
 
+      <p>
+        The <dfn><a href="http://www.w3.org/TR/mediastream-recording/#idl-def-MediaRecorder">MediaRecorder</a></dfn>
+        interface is defined in [[MediaStream-Recording]].
+      </p>
 
+      <p>
+        The <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">video</a></dfn>
+        element is defined in [[!HTML5]].
+      </p>
+    </section>
 
+<!-- - - - - - - - - - - - - Extended Interface Navigator  - - - - - - - - - -->
+    <section>
+      <h2><a>Navigator</a> Interface</h2>
+      <dl title="partial interface Navigator" class="idl">
+        <dt>readonly attribute TVManager tv</dt>
+        <dd>
+          MUST return the object that exposes the interface to the TV service.
+        </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - - Interface TVManager  - - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVManager</a> Interface</h2>
+      <p>
+        The <a>TVManager</a> interface represents a bunch of properties and
+        a set of operations that can be used to manage the TV device.
+      </p>
+
+      <dl title="interface TVManager" class="idl">
+        <dt>Promise getTuners ()</dt>
+          <dd>
+            This method makes a request to retrieve all the TV tuners that are
+            available in the TV device. It returns a new <code>Promise</code>
+            that will be used to notify the caller about the result of the
+            operation, which is an array of <a>TVTuner</a> elements.
+          </dd>
+      </dl>
+
+      <section>
+        <h3>Procedures</h3>
+
+        <p>
+          The <dfn><code>getTuners</code></dfn> method when invoked MUST run
+          the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV device to retrieve all the TV tuners that
+            are available in the TV device.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Let <var>tuners</var> be the array of the retrieved <a>TVTuner</a>
+              elements.
+            </li>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              with <em>tuners</em> as the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+      </section>
+
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVTuner  - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVTuner</a> Interface</h2>
+      <p>
+        The <a>TVTuner</a> interface represents a bunch of properties and
+        a set of operations related to the TV tuner.
+      </p>
+      <dl title="interface TVTuner : EventTarget" class="idl">
+
+        <dt>sequence&lt;TVSourceType&gt; getSupportedSourceTypes ()</dt>
+          <dd>
+            This method makes a request to retrieve all the types of the
+            supported TV sources for the TV tuner. It returns the types of the
+            supported TV sources.
+          </dd>
+
+        <dt>Promise getSources ()</dt>
+          <dd>
+            This method makes a request to retrieve all the TV sources that are
+            available in the TV tuner. It returns a new <code>Promise</code>
+            that will be used to notify the caller about the result of the
+            operation, which is an array of <a>TVSource</a> elements that belong
+            to the TV tuner.
+          </dd>
+
+        <dt>Promise setCurrentSource ()</dt>
+          <dd>
+            This method makes a request to configure the current TV source of
+            the TV tuner by the <code>sourceType</code> parameter. It returns a
+            new <code>Promise</code> that will be used to notify the caller
+            about the result of the operation.
+            <dl class='parameters'>
+              <dt>TVSourceType sourceType</dt>
+                <dd>
+                  Specifies the TV source type for configuring the current TV
+                  source.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>readonly attribute DOMString id</dt>
+          <dd>
+            MUST return the ID of the TV tuner.
+          </dd>
+
+        <dt>readonly attribute TVSource? currentSource</dt>
+          <dd>
+            MUST return the currently configured TV source. MUST return
+            <em>null</em> if the TV source is not configured.
+          </dd>
+
+        <dt>readonly attribute MediaStream? stream</dt>
+          <dd>
+            MUST return a <code>MediaStream</code> object that is currently streamed by the
+            TV tuner, which can be played by the <code>video</code>
+            element by assigning the <code>MediaStream</code> to the
+            <code><a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">HTMLMediaElement</a></code>
+            and can be recorded by the
+            <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/media-stream-capture/MediaRecorder.html#MediaRecorderAPI">MediaRecorder</a>.
+            MUST return <em>null</em> if the TV tuner is not streaming any data,
+            which happens when the streaming signal is broken or due to any
+            other reasons that the TV tuner fails to stream the data.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler oncurrentsourcechanged
+        </dt>
+          <dd>
+            Handles the <code>oncurrentsourcechanged</code> event of type
+            <a>TVCurrentSourceChangedEvent</a>, fired when the method
+            <a><code>setCurrentSource</code></a> is invoked to configure the
+            current TV source.
+          </dd>
+      </dl>
+
+      <section>
+        <h3>Procedures</h3>
+
+        <p>
+          The <dfn><code>getSources</code></dfn> method when invoked MUST run
+          the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV tuner to retrieve all the TV sources that
+            are available in the TV tuner.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+            <ol>
+              <li>
+                Let <var>sources</var> be the array of the retrieved <code>TVSource</code> elements.
+              </li>
+              <li>
+                Invoke <em>resolver</em>'s <a class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+                with <em>channels</em> as the <code>value</code> argument.
+              </li>
+            </ol>
+          </li>
+        </ol>
+
+        <p>
+          The <dfn><code>setCurrentSource</code></dfn> method when invoked MUST
+          run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV tuner to configure the current TV source
+            according to the <code>sourceType</code> parameter.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+            <ol>
+              <li>
+                Invoke <em>resolver</em>'s <a
+                class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+                without assigning a value to the <code>value</code> argument.
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Event handlers</h2>
+        <p>The following are the <a class="internalDFN"
+        href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
+        class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
+        supported as attributes by the <a>TVTuner</a> object.
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Event handler</th>
+              <th>Event name</th>
+              <th>Event type</th>
+              <th>Short description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>oncurrentsourcechanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">currentsourcechanged</dfn></code></td>
+              <td><a><code>TVCurrentSourceChangedEvent</code></a></td>
+              <td>
+                Handles the information of the current TV source that is
+                configured by the method <a><code>setCurrentSource</code></a>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVSource  - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVSource</a> Interface</h2>
+      <p>
+        The <a>TVSource</a> interface represents a bunch of properties and a set
+        of operations related to the TV source.
+      </p>
+      <dl title="interface TVSource : EventTarget" class="idl">
+
+        <dt>Promise getChannels ()</dt>
+          <dd>
+            This method makes a request to retrieve all the TV channels that are
+            available in the TV source. It returns a new <code>Promise</code>
+            that will be used to notify the caller about the result of the
+            operation, which is an array of <a>TVChannel</a> elements that
+            belong to the TV source. Note that the <code>Promise</code> may be
+            rejected with an <code>InvalidStateError</code> if this method gets
+            called during channel scanning.
+          </dd>
+
+        <dt>Promise setCurrentChannel ()</dt>
+          <dd>
+            This method makes a request to tune the currently streamed TV
+            channel by the <code>channelNumber</code> parameter. It returns a
+            new <code>Promise</code> that will be used to notify the caller
+            about the result of the operation. Note that the <code>Promise</code>
+            may be rejected with an <code>InvalidStateError</code> if this
+            method gets called during channel scanning.
+            <dl class='parameters'>
+              <dt>DOMString channelNumber</dt>
+                <dd>
+                  Specifies the TV channel number for tuning the currently
+                  streamed TV channel.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>Promise startScanning ()</dt>
+          <dd>
+            This method makes a request to start scanning all the TV channels
+            that are available in the TV source by the <code>options</code>
+            parameter. It returns a new <code>Promise</code> that will be used
+            to notify the caller about the result of the operation. Note that
+            this method has to be called first at some setup stages, so that the
+            method <a><code>getChannels</code></a> can retrieve the channels
+            that have successfully been scanned by the TV source. Besides, due
+            to some constraints of tuner modules, scanning and streaming are not
+            encouraged to run at the same time.  
+            <dl class='parameters'>
+              <dt>optional TVStartScanningOptions options</dt>
+                <dd>
+                  Specifies the options for scanning the TV channels. The
+                  <code>isRescanned</code> option in the <code>options</code>
+                  parameter specifies whether or not the process of scanning the
+                  TV channels has to clear the currently scanned TV channels
+                  before scanning; if it is not passed, this method will rescan
+                  all the TV channels as if it is passed as <code>true</code>.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>Promise stopScanning ()</dt>
+          <dd>
+            This method makes a request to stop scanning the TV channels for the
+            TV source. It returns a new <code>Promise</code> that will be used
+            to notify the caller about the result of the operation.
+          </dd>
+
+        <dt>readonly attribute TVTuner tuner</dt>
+          <dd>
+            MUST return the TV tuner which the TV source belongs to.
+          </dd>
+
+        <dt>readonly attribute TVSourceType type</dt>
+          <dd>
+            MUST return the type of the TV source.
+          </dd>
+
+        <dt>readonly attribute boolean isScanning</dt>
+          <dd>
+            MUST indicate whether the TV source is scanning the TV channels or
+            not.
+          </dd>
+
+        <dt>readonly attribute TVChannel? currentChannel</dt>
+          <dd>
+            MUST return the TV channel that is currently streamed by the TV
+            tuner which owns the TV source. MUST return <em>null</em> if the TV
+            tuner is not streaming any data.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler oncurrentchannelchanged
+        </dt>
+          <dd>
+            Handles the <code>oncurrentchannelchanged</code> event of type
+            <a>TVCurrentChannelChangedEvent</a>, fired when the method
+            <a><code>setCurrentChannel</code></a> is invoked to tune the
+            currently streamed TV channel.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler oneitbroadcasted
+        </dt>
+          <dd>
+            Handles the <code>oneitbroadcasted</code> event of type
+            <a>TVEITBroadcastedEvent</a>, fired when the Event Information Table
+            (EIT) is broadcasted by the TV source.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler onemergencyalerted
+        </dt>
+          <dd>
+            Handles the <code>onemergencyalerted</code> event of type
+            <a>TVEmergencyAlertedEvent</a>, fired when an emergency, such as
+            earthquake or tsunami, occurs and is broadcasted by the TV source.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler onscanningstatechanged
+        </dt>
+          <dd>
+            Handles the <code>onscanningstatechanged</code> event of type
+            <a>TVScanningStateChangedEvent</a>, fired when the state of scanning
+            the TV channels is changed by the TV source. E.g., it can be fired
+            when the method <a><code>startScanning</code></a> or the method
+            <a><code>stopScanning</code></a> starts or stops scanning the TV
+            channels.
+          </dd>
+      </dl>
+
+      <section>
+        <h3>Procedures</h3>
+
+        <p>
+          The <dfn><code>getChannels</code></dfn> method when invoked MUST run
+          the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV source to retrieve all the TV channels that
+            are available in the TV source.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Let <var>channels</var> be the array of the retrieved
+              <a>TVChannel</a> elements.
+            </li>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              with <em>channels</em> as the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+        <p>
+          The <dfn><code>setCurrentChannel</code></dfn> method when invoked MUST
+          run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV source to tune the currently streamed TV
+            channel according to the <code>channelNumber</code> parameter.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+        <p>
+          The <dfn><code>startScanning</code></dfn> method when invoked MUST
+          run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV source to start scanning all the TV
+            channels that are available in the TV source according to the
+            scanning options specified in the <code>options</code> parameter. If
+            the <code>isRescanned</code> option in the <code>options</code>
+            parameter is not passed or it is passed as <code>true</code>, the
+            <a class="internalDFN" href="#dfn-user-agent">user agent</a> has to
+            clear the currently scanned TV channels before scanning; if it is
+            passed as <code>false</code>, the
+            <a class="internalDFN" href="#dfn-user-agent">user agent</a> will
+            simply scan additional TV channels which haven't been scanned yet.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+        <p>
+          The <dfn><code>stopScanning</code></dfn> method when invoked MUST run
+          the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV source to stop scanning the TV channels.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+      </section>
+
+      <section>
+        <h2>Event handlers</h2>
+        <p>The following are the <a class="internalDFN"
+        href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
+        class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
+        supported as attributes by the <a>TVSource</a> object.
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Event handler</th>
+              <th>Event name</th>
+              <th>Event type</th>
+              <th>Short description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>oncurrentchannelchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">currentchannelchanged</dfn></code></td>
+              <td><a><code>TVCurrentChannelChangedEvent</code></a></td>
+              <td>
+                Handles the information of the currently streamed TV channel
+                that is tuned by the method
+                <a><code>setCurrentChannel</code></a>.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong><code>oneitbroadcasted</code></strong></td>
+              <td><code><dfn id="dfn-change-event">eitbroadcasted</dfn></code></td>
+              <td><a><code>TVEITBroadcastedEvent</code></a></td>
+              <td>
+                Handles the information of the available TV programs in the EIT
+                that is broadcasted by the TV source.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong><code>onemergencyalerted</code></strong></td>
+              <td><code><dfn id="dfn-change-event">emergencyalerted</dfn></code></td>
+              <td><a><code>TVEmergencyAlertedEvent</code></a></td>
+              <td>
+                Handles the information of the emergency alert when an emergency,
+                such as earthquake or tsunami, occurs and is broadcasted by the
+                TV source.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong><code>onscanningstatechanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">scanningstatechanged</dfn></code></td>
+              <td><a><code>TVScanningStateChangedEvent</code></a></td>
+              <td>
+                Handles the information of the state of scanning the TV
+                channels, which is changed by the TV source.
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVChannel  - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVChannel</a> Interface</h2>
+      <p>
+        The <a>TVChannel</a> interface represents a bunch of properties and
+        a set of operations related to the TV channel.
+      </p>
+      <dl title="interface TVChannel : EventTarget" class="idl">
+
+        <dt>Promise getPrograms ()</dt>
+          <dd>
+            This method makes a request to retrieve all the TV programs that are
+            available in the TV channel by the <code>options</code> parameter.
+            It returns a new <code>Promise</code> that will be used to notify
+            the caller about the result of the operation, which is an array of
+            <a>TVProgram</a> elements that belong to the TV channel.
+            <dl class='parameters'>
+              <dt>optional TVGetProgramsOptions options</dt>
+                <dd>
+                  Specifies the options for retrieving the TV programs. If this
+                  parameter is not passed, this method will retuen all the
+                  available TV programs.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>Promise getCurrentProgram ()</dt>
+          <dd>
+            This method makes a request to retrieve the current TV program
+            available in the TV channel. It returns a new <code>Promise</code>
+            that will be used to notify the caller about the result of the
+            operation, which is a <a>TVProgram</a> element that belongs to the
+            TV channel.
+          </dd>
+
+        <dt>readonly attribute DOMString networkId</dt>
+          <dd>
+            MUST return the identification of a broadcast transmission network.
+            On satellite and IP broadband, typically one <code>networkId</code>
+            corresponds to an operator. On cable and terrestrial, where
+            different radio frequencies might be used in different regions,
+            operators typically use one <code>networkId</code> per such region.
+          </dd>
+
+        <dt>readonly attribute DOMString transportStreamId</dt>
+          <dd>
+            MUST return the identification of a time-domain multiplex of several
+            programmes carried in Transport Stream (TS) packets. One or more
+            multiplexes can be transmitted on any given radio frequency in a DVB
+            network.
+          </dd>
+
+        <dt>readonly attribute DOMString serviceId</dt>
+          <dd>
+            MUST return the identification of a TV, radio or data programme
+            within a TS multiplex. The number of programmes is limited by the
+            capacity of the underlying physical channel.
+          </dd>
+
+        <dt>readonly attribute TVSource source</dt>
+          <dd>
+            MUST return the TV source which the TV channel belongs to.
+          </dd>
+
+        <dt>readonly attribute TVChannelType type</dt>
+          <dd>
+            MUST return the type of the TV channel.
+          </dd>
+
+        <dt>readonly attribute DOMString name</dt>
+          <dd>
+            MUST return the name of the TV channel. E.g., <code>"CNN"</code>,
+            <code>"NHK"</code>... etc.
+          </dd>
+
+        <dt>readonly attribute DOMString number</dt>
+          <dd>
+            MUST return the Logical Channel Number (LCN) of the TV channel.
+            E.g., <code>"12-1"</code>, <code>"12-2"</code>,
+            <code>"12-2"</code>... etc.
+          </dd>
+
+        <dt>readonly attribute boolean isEmergency</dt>
+          <dd>
+            MUST indicate whether the TV channel is for the emergency purpose.
+          </dd>
+
+        <dt>readonly attribute boolean isFree</dt>
+          <dd>
+            MUST indicate whether the TV channel is free to watch.
+          </dd>
+
+      </dl>
+
+      <section>
+        <h3>Procedures</h3>
+
+        <p>
+          The <dfn><code>getPrograms</code></dfn> method when invoked
+          MUST run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV channel to retrieve all the TV programs
+            that are available in the TV channel according to the retrieving
+            options specified in the <code>options</code> parameter.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Let <var>programs</var> be the array of the retrieved
+              <a>TVProgram</a> elements.
+            </li>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              with <em>programs</em> as the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+        <p>
+          The <dfn><code>getCurrentProgram</code></dfn> method when invoked
+          MUST run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code>Promise</code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV channel to retrieve all the current TV
+            program available in the TV channel.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Let <var>program</var> be the retrieved <a>TVProgram</a> element.
+            </li>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              with <em>program</em> as the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+      </section>
+
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVProgram  - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVProgram</a> Interface</h2>
+      <p>
+        The <a>TVProgram</a> interface represents a bunch of properties and
+        a set of operations related to the TV program.
+      </p>
+      <dl title="interface TVProgram" class="idl">
+        <dt>sequence&lt;DOMString&gt; getAudioLanguages ()</dt>
+          <dd>
+            MUST return the audio languages of the TV program in 3-digit
+            language codes specified by ISO 639-2.
+          </dd>
+
+        <dt>sequence&lt;DOMString&gt; getSubtitleLanguages ()</dt>
+          <dd>
+            MUST return the subtitle languages of the TV program in 3-digit
+            language codes specified by ISO 639-2.
+          </dd>
+
+        <dt>readonly attribute DOMString eventId</dt>
+          <dd>
+            MUST return the event ID of the TV program. It has to be unique only
+            within a TV channel.
+          </dd>
+
+        <dt>readonly attribute TVChannel channel</dt>
+          <dd>
+            MUST return the TV channel which the TV program belongs to.
+          </dd>
+
+        <dt>readonly attribute DOMString title</dt>
+          <dd>
+            MUST return the title of the TV program.
+          </dd>
+
+        <dt>readonly attribute unsigned long long startTime</dt>
+          <dd>
+            MUST return the start time of the TV program.
+          </dd>
+
+        <dt>readonly attribute unsigned long long duration</dt>
+          <dd>
+            MUST return the duration of the TV program.
+          </dd>
+
+        <dt>readonly attribute DOMString? description</dt>
+          <dd>
+            MUST return the description of the TV program.
+          </dd>
+
+        <dt>readonly attribute DOMString? rating</dt>
+          <dd>
+            MUST return the rating of the TV program.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Dictionary TVStartScanningOptions   - - - - - - - -->
+    <section>
+      <h2><a>TVStartScanningOptions</a> Dictionary</h2>
+      <p>
+        The <a>TVStartScanningOptions</a> dictionary contains the information
+        for scanning the TV channels.
+      </p>
+      <dl title="dictionary TVStartScanningOptions" class="idl">
+        <dt>boolean isRescanned</dt>
+          <dd>
+            Specifies whether or not the process of scanning the TV channels has
+            to clear the currently scanned TV channels before scanning.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - Dictionary TVGetProgramsOptions   - - - - - - - - - -->
+    <section>
+      <h2><a>TVGetProgramsOptions</a> Dictionary</h2>
+      <p>
+        The <a>TVGetProgramsOptions</a> dictionary contains the information for
+        retrieving the TV programs.
+      </p>
+      <dl title="dictionary TVGetProgramsOptions" class="idl">
+        <dt>unsigned long offsetOfPrograms</dt>
+          <dd>
+            Specifies how many TV programs to be skipped from the time point
+            of now. E.g., if this option is passed as <code>1</code>, the
+            method will skip the current TV program and return the ones starting
+            with the next TV program.
+          </dd>
+        <dt>unsigned long numberOfPrograms</dt>
+          <dd>
+            Specifies how many TV programs to be retrieved from the time point
+            of now. E.g., if this option is passed as <code>1</code>, the
+            method will return the TV program that is currently broadcasted by
+            the TV channel at this moment; if it is passed as <code>2</code>,
+            the method will return the current and the next TV programs. Passing
+            0 implies no effect. Besides, the number of returned TV programs
+            could be less than this value if there are not that many programs.
+          </dd>
+        <dt>unsigned long long startTime</dt>
+          <dd>
+            Specifies the start time of a time period which bounds the time
+            slots of TV programs to be retrieved.
+          </dd>
+        <dt>unsigned long long duration</dt>
+          <dd>
+            Specifies the duration of a time period which bounds the time slots
+            of TV programs to be retrieved.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - Interface TVCurrentSourceChangedEvent - - - - - - - - - -->
+    <section>
+      <h2><a>TVCurrentSourceChangedEvent</a> Interface</h2>
+      <p>
+        The <a>TVCurrentSourceChangedEvent</a> interface represents the event
+        related to the current TV source that is configured by the method
+        <a><code>setCurrentSource</code></a>.
+      </p>
+      <dl title="interface TVCurrentSourceChangedEvent : Event" class="idl">
+        <dt>readonly attribute TVSource? source</dt>
+          <dd>
+            MUST return the TV source that is currently configured by the TV
+            tuner. MUST return <em>null</em> if the TV source is not configured.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVEITBroadcastedEvent - - - - - - - - -->
+    <section>
+      <h2><a>TVEITBroadcastedEvent</a> Interface</h2>
+      <p>
+        The <a>TVEITBroadcastedEvent</a> interface represents the event related
+        to the available TV programs in the EIT that is broadcasted by the TV
+        source.
+      </p>
+      <dl title="interface TVEITBroadcastedEvent : Event" class="idl">
+        <dt>readonly attribute object programs</dt>
+          <dd>
+            MUST return the available TV programs in the EIT that is broadcasted
+            by the TV source. Please note that the cached value for this array
+            needs to go into an internal slot for the object, and it should be
+            cached there until the next time that the underlying array changes
+            when the cached value will be updated.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVEmergencyAlertedEvent - - - - - - - - -->
+    <section>
+      <h2><a>TVEmergencyAlertedEvent</a> Interface</h2>
+      <p>
+        The <a>TVEmergencyAlertedEvent</a> interface represents the event
+        related to the emergency alert that is broadcasted by the TV source.
+      </p>
+      <dl title="interface TVEmergencyAlertedEvent : Event" class="idl">
+        <dt>readonly attribute DOMString severityLevel</dt>
+          <dd>
+            MUST return the severity level of the emergency alert. The
+            classification of severity level might differ in different regions.
+          </dd>
+        <dt>readonly attribute DOMString? description</dt>
+          <dd>
+            MUST return the description of the emergency alert.
+          </dd>
+        <dt>readonly attribute TVChannel? channel</dt>
+          <dd>
+            MUST return the emergency channel which might be switched to for
+            more information about the emergency.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - Interface TVScanningStateChangedEvent - - - - - - - - -->
+    <section>
+      <h2><a>TVScanningStateChangedEvent</a> Interface</h2>
+      <p>
+        The <a>TVScanningStateChangedEvent</a> interface represents the event
+        related to the state of channel scanning, which is changed by the TV
+        source.
+      </p>
+      <dl title="interface TVScanningStateChangedEvent : Event" class="idl">
+        <dt>readonly attribute TVScanningState state</dt>
+          <dd>
+            MUST return the state of channel scanning, which is changed by the
+            TV source.
+          </dd>
+
+        <dt>readonly attribute TVChannel? channel</dt>
+           <dd>
+            MUST return the TV channel that is scanned by the TV source. MUST
+            return <em>null</em> if the <code>state</code> is not specified as
+            <code>"scanned"</code>.
+           </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - Interface TVCurrentChannelChangedEvent - - - - - - - - - -->
+    <section>
+      <h2><a>TVCurrentChannelChangedEvent</a> Interface</h2>
+      <p>
+        The <a>TVCurrentChannelChangedEvent</a> interface represents the event
+        related to the currently streamed TV channel that is tuned by the method
+        <a><code>setCurrentChannel</code></a>.
+      </p>
+      <dl title="interface TVCurrentChannelChangedEvent : Event" class="idl">
+        <dt>readonly attribute TVChannel? channel</dt>
+          <dd>
+            MUST return the TV channel that is currently streamed by the TV
+            tuner. MUST return <em>null</em> if the TV tuner is not streaming
+            any data.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Interface Enumerations  - - - - - - - - - - - - - -->
+    <section>
+      <h2>Enumerations</h2>
+      <p>
+        The attribute <code>type</code> in the <a>TVSource</a> can have the
+        following values:
+      </p>
+      <dl title="enum TVSourceType" class="idl">
+        <dt>dvb-t</dt>
+          <dd>
+            The TV source works for DVB-T (terrestrial).
+          </dd>
+
+        <dt>dvb-t2</dt>
+          <dd>
+            The TV source works for DVB-T2 (terrestrial).
+          </dd>
+
+        <dt>dvb-c</dt>
+          <dd>
+            The TV source works for DVB-C (cable).
+          </dd>
+
+        <dt>dvb-c2</dt>
+          <dd>
+            The TV source works for DVB-C2 (cable).
+          </dd>
+
+        <dt>dvb-s</dt>
+          <dd>
+            The TV source works for DVB-S (satellite).
+          </dd>
+
+        <dt>dvb-s2</dt>
+          <dd>
+            The TV source works for DVB-S2 (satellite).
+          </dd>
+
+        <dt>dvb-h</dt>
+          <dd>
+            The TV source works for DVB-H (handheld).
+          </dd>
+
+        <dt>dvb-sh</dt>
+          <dd>
+            The TV source works for DVB-SH (satellite).
+          </dd>
+
+        <dt>atsc</dt>
+          <dd>
+            The TV source works for ATSC (terrestrial/cable).
+          </dd>
+
+        <dt>atsc-m/h</dt>
+          <dd>
+            The TV source works for ATSC-M/H (mobile/handheld).
+          </dd>
+
+        <dt>isdb-t</dt>
+          <dd>
+            The TV source works for ISDB-T (terrestrial).
+          </dd>
+
+        <dt>isdb-tb</dt>
+          <dd>
+            The TV source works for ISDB-Tb (terrestrial, Brazil).
+          </dd>
+
+        <dt>isdb-s</dt>
+          <dd>
+            The TV source works for ISDB-S (satellite).
+          </dd>
+
+        <dt>isdb-c</dt>
+          <dd>
+            The TV source works for ISDB-C (cable).
+          </dd>
+
+        <dt>1seg</dt>
+          <dd>
+            The TV source works for 1seg (handheld).
+          </dd>
+
+        <dt>dtmb</dt>
+          <dd>
+            The TV source works for DTMB (terrestrial).
+          </dd>
+
+        <dt>cmmb</dt>
+          <dd>
+            The TV source works for CMMB (handheld).
+          </dd>
+
+        <dt>t-dmb</dt>
+          <dd>
+            The TV source works for T-DMB (terrestrial).
+          </dd>
+
+        <dt>s-dmb</dt>
+          <dd>
+            The TV source works for S-DMB (satellite).
+          </dd>
+
+      </dl>
+
+      <p>
+        The attribute <code>type</code> in a <a>TVChannel</a> can have the
+        following values:
+      </p>
+      <dl title="enum TVChannelType" class="idl">
+        <dt>tv</dt>
+          <dd>
+            The TV channel is broadcasted as a regular TV type.
+          </dd>
+
+        <dt>radio</dt>
+          <dd>
+            The TV channel is broadcasted as a radio type.
+          </dd>
+
+        <dt>data</dt>
+          <dd>
+            The TV channel is broadcasted as a data type.
+          </dd>
+      </dl>
+
+      <p>
+        The attribute <code>state</code> in the
+        <a>TVScanningStateChangedEvent</a> can have the following values:
+      </p>
+      <dl title="enum TVScanningState" class="idl">
+        <dt>cleared</dt>
+          <dd>
+            The state of scanning the TV channels is cleared by the TV source,
+            which means all the currently scanned TV channels are cleared before
+            scanning.
+          </dd>
+
+        <dt>scanned</dt>
+          <dd>
+            The state of scanning the TV channels is scanned, which means a TV
+            channel is successfully scanned by the TV source.
+          </dd>
+
+        <dt>completed</dt>
+          <dd>
+            The state of scanning the TV channels is completed by the TV source.
+          </dd>
+
+        <dt>stopped</dt>
+          <dd>
+            The state of scanning the TV channels is stopped by the TV source.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Acknowledgements  - - - - - - - - - - - - - - - - -->
+    <section>
+      <h2>Acknowledgements</h2>
+      <p>
+        To be constructed.
+      </p>
+    </section>
+
+<!-- - - - - - - - - - - - - - - Conformance - - - - - - - - - - - - - - - - -->
+    <section id="conformance">
+      <p>
+        All of the text of this specification is normative except sections
+        explicitly marked as non-normative, examples, and notes.
+      </p>
+
+      <p>
+        This specification defines conformance criteria that apply to a single
+        product: the <dfn>user agent</dfn> that implements the interfaces that
+        it contains.
+      </p>
+
+      <p>
+        Implementations that use ECMAScript to implement the APIs defined in
+        this specification MUST implement them in a manner consistent with the
+        ECMAScript Bindings defined in the Web IDL specification [[!WEBIDL]], as
+        this specification uses that specification and terminology.
+      </p>
+    </section>
+
+</body>
+</html>
