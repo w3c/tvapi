@@ -519,6 +519,15 @@
           </dd>
 
         <dt class="no-docs">
+          attribute EventHandler onemergencyalerted
+        </dt>
+          <dd>
+            Handles the <code>onemergencyalerted</code> event of type
+            <a>TVEmergencyAlertedEvent</a>, fired when an emergency, such as
+            earthquake or tsunami, occurs and is broadcasted by the TV source.
+          </dd>
+
+        <dt class="no-docs">
           attribute EventHandler onscanningstatechanged
         </dt>
           <dd>
@@ -714,6 +723,17 @@
               <td>
                 Handles the information of the available TV programs in the EIT
                 that is broadcasted by the TV source.
+              </td>
+            </tr>
+
+            <tr>
+              <td><strong><code>onemergencyalerted</code></strong></td>
+              <td><code><dfn id="dfn-change-event">emergencyalerted</dfn></code></td>
+              <td><a><code>TVEmergencyAlertedEvent</code></a></td>
+              <td>
+                Handles the information of the emergency alert when an emergency,
+                such as earthquake or tsunami, occurs and is broadcasted by the
+                TV source.
               </td>
             </tr>
 
@@ -1057,19 +1077,44 @@
       </dl>
     </section>
 
+<!-- - - - - - - - - - - - Interface TVEmergencyAlertedEvent - - - - - - - - -->
+    <section>
+      <h2><a>TVEmergencyAlertedEvent</a> Interface</h2>
+      <p>
+        The <a>TVEmergencyAlertedEvent</a> interface represents the event
+        related to the emergency alert that is broadcasted by the TV source.
+      </p>
+      <dl title="interface TVEmergencyAlertedEvent : Event" class="idl">
+        <dt>readonly attribute DOMString severityLevel</dt>
+          <dd>
+            MUST return the severity level of the emergency alert. The
+            classification of severity level might differ in different regions.
+          </dd>
+        <dt>readonly attribute DOMString? description</dt>
+          <dd>
+            MUST return the description of the emergency alert.
+          </dd>
+        <dt>readonly attribute TVChannel? channel</dt>
+          <dd>
+            MUST return the emergency channel which might be switched to for
+            more information about the emergency.
+          </dd>
+      </dl>
+    </section>
+
 <!-- - - - - - - - - - Interface TVScanningStateChangedEvent - - - - - - - - -->
     <section>
       <h2><a>TVScanningStateChangedEvent</a> Interface</h2>
       <p>
         The <a>TVScanningStateChangedEvent</a> interface represents the event
-        related to the state of scanning the TV channels, which is changed by
-        the TV source.
+        related to the state of channel scanning, which is changed by the TV
+        source.
       </p>
       <dl title="interface TVScanningStateChangedEvent : Event" class="idl">
         <dt>readonly attribute TVScanningState state</dt>
           <dd>
-            MUST return the state of scanning the TV channels, which is changed
-            by the TV source.
+            MUST return the state of channel scanning, which is changed by the
+            TV source.
           </dd>
 
         <dt>readonly attribute TVChannel? channel</dt>
