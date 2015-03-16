@@ -1085,10 +1085,11 @@
         related to the emergency alert that is broadcasted by the TV source.
       </p>
       <dl title="interface TVEmergencyAlertedEvent : Event" class="idl">
-        <dt>readonly attribute DOMString severityLevel</dt>
+        <dt>readonly attribute DOMString? severityLevel</dt>
           <dd>
             MUST return the severity level of the emergency alert. The
             classification of severity level might differ in different regions.
+            MUST return <em>null</em> when the emergency announcement is over.
           </dd>
         <dt>readonly attribute DOMString? description</dt>
           <dd>
@@ -1098,6 +1099,10 @@
           <dd>
             MUST return the emergency channel which might be switched to for
             more information about the emergency.
+          </dd>
+        <dt>readonly attribute DOMString? url</dt>
+          <dd>
+            MUST return the URL where more information might be available.
           </dd>
       </dl>
     </section>
