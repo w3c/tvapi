@@ -153,7 +153,15 @@
 
       <p>
         The <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">video</a></dfn>
-        element is defined in [[!HTML5]].
+        and <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#htmlmediaelement">HTMLMediaElement</a></dfn>
+        elements are defined in [[!HTML5]].
+      </p>
+
+      <p>
+        The <dfn><a href="http://www.w3.org/TR/html51/semantics.html#texttrack">TextTrack</a></dfn>,
+        <dfn><a href="http://www.w3.org/TR/html51/semantics.html#texttrackcue">TextTrackCue</a></dfn>,
+        and <dfn><a href="http://www.w3.org/TR/html51/semantics.html#trackevent">TrackEvent</a></dfn>
+        interfaces are defined in [[HTML51]]
       </p>
     </section>
 
@@ -180,7 +188,7 @@
         <dt>Promise getTuners ()</dt>
           <dd>
             This method makes a request to retrieve all the TV tuners that are
-            available in the TV device. It returns a new <code>Promise</code>
+            available in the TV device. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is an array of <a>TVTuner</a> elements.
           </dd>
@@ -195,7 +203,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -248,7 +256,7 @@
         <dt>Promise getSources ()</dt>
           <dd>
             This method makes a request to retrieve all the TV sources that are
-            available in the TV tuner. It returns a new <code>Promise</code>
+            available in the TV tuner. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is an array of <a>TVSource</a> elements that belong
             to the TV tuner.
@@ -258,7 +266,7 @@
           <dd>
             This method makes a request to configure the current TV source of
             the TV tuner by the <code>sourceType</code> parameter. It returns a
-            new <code>Promise</code> that will be used to notify the caller
+            new <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation.
             <dl class='parameters'>
               <dt>TVSourceType sourceType</dt>
@@ -282,12 +290,13 @@
 
         <dt>readonly attribute MediaStream? stream</dt>
           <dd>
-            MUST return a <code>MediaStream</code> object that is currently streamed by the
-            TV tuner, which can be played by the <code>video</code>
-            element by assigning the <code>MediaStream</code> to the
-            <code><a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">HTMLMediaElement</a></code>
-            and can be recorded by the
-            <a href="https://dvcs.w3.org/hg/dap/raw-file/tip/media-stream-capture/MediaRecorder.html#MediaRecorderAPI">MediaRecorder</a>.
+            MUST return a <code><a>MediaStream</a></code> object that is
+            currently streamed by the TV tuner, which can be played by the
+            <code><a>video</a></code> element by
+            <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
+            the <code><a>MediaStream</a></code> to the
+            <code><a>HTMLMediaElement</a></code> and can be recorded by the
+            <a>MediaRecorder</a>.
             MUST return <em>null</em> if the TV tuner is not streaming any data,
             which happens when the streaming signal is broken or due to any
             other reasons that the TV tuner fails to stream the data.
@@ -313,7 +322,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -348,7 +357,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -420,10 +429,10 @@
         <dt>Promise getChannels ()</dt>
           <dd>
             This method makes a request to retrieve all the TV channels that are
-            available in the TV source. It returns a new <code>Promise</code>
+            available in the TV source. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is an array of <a>TVChannel</a> elements that
-            belong to the TV source. Note that the <code>Promise</code> may be
+            belong to the TV source. Note that the <code><a>Promise</a></code> may be
             rejected with an <code>InvalidStateError</code> if this method gets
             called during channel scanning.
           </dd>
@@ -432,8 +441,8 @@
           <dd>
             This method makes a request to tune the currently streamed TV
             channel by the <code>channelNumber</code> parameter. It returns a
-            new <code>Promise</code> that will be used to notify the caller
-            about the result of the operation. Note that the <code>Promise</code>
+            new <code><a>Promise</a></code> that will be used to notify the caller
+            about the result of the operation. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidStateError</code> if this
             method gets called during channel scanning.
             <dl class='parameters'>
@@ -449,7 +458,7 @@
           <dd>
             This method makes a request to start scanning all the TV channels
             that are available in the TV source by the <code>options</code>
-            parameter. It returns a new <code>Promise</code> that will be used
+            parameter. It returns a new <code><a>Promise</a></code> that will be used
             to notify the caller about the result of the operation. Note that
             this method has to be called first at some setup stages, so that the
             method <a><code>getChannels</code></a> can retrieve the channels
@@ -472,7 +481,7 @@
         <dt>Promise stopScanning ()</dt>
           <dd>
             This method makes a request to stop scanning the TV channels for the
-            TV source. It returns a new <code>Promise</code> that will be used
+            TV source. It returns a new <code><a>Promise</a></code> that will be used
             to notify the caller about the result of the operation.
           </dd>
 
@@ -549,7 +558,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -586,7 +595,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -619,7 +628,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -660,7 +669,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -766,7 +775,7 @@
           <dd>
             This method makes a request to retrieve all the TV programs that are
             available in the TV channel by the <code>options</code> parameter.
-            It returns a new <code>Promise</code> that will be used to notify
+            It returns a new <code><a>Promise</a></code> that will be used to notify
             the caller about the result of the operation, which is an array of
             <a>TVProgram</a> elements that belong to the TV channel.
             <dl class='parameters'>
@@ -782,7 +791,7 @@
         <dt>Promise getCurrentProgram ()</dt>
           <dd>
             This method makes a request to retrieve the current TV program
-            available in the TV channel. It returns a new <code>Promise</code>
+            available in the TV channel. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is a <a>TVProgram</a> element that belongs to the
             TV channel.
@@ -825,14 +834,13 @@
         <dt>readonly attribute DOMString name</dt>
           <dd>
             MUST return the name of the TV channel. E.g., <code>"CNN"</code>,
-            <code>"NHK"</code>... etc.
+            <code>"NHK"</code>, etc.
           </dd>
 
         <dt>readonly attribute DOMString number</dt>
           <dd>
             MUST return the Logical Channel Number (LCN) of the TV channel.
-            E.g., <code>"12-1"</code>, <code>"12-2"</code>,
-            <code>"12-2"</code>... etc.
+            E.g., <code>"12-1"</code>, <code>"12-2"</code>, etc.
           </dd>
 
         <dt>readonly attribute boolean isEmergency</dt>
@@ -856,7 +864,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -894,7 +902,7 @@
         </p>
         <ol>
           <li>
-            Let <var>promise</var> be a new <code>Promise</code> object and
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
             <var>resolver</var> be its associated <code>resolver</code>.
           </li>
           <li>
@@ -982,6 +990,48 @@
         <dt>readonly attribute DOMString? rating</dt>
           <dd>
             MUST return the rating of the TV program.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVTriggerCue - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVTriggerCue</a> Interface</h2>
+      <p>
+        The <a>TVTriggerCue</a> interface represents a bunch of properties and
+        a set of operations related to the TV trigger, which may be used to
+        carry some information via in-band or out-of-band mechanism based on the
+        current playing content. It's inherited from
+        <code><a>TextTrackCue</a></code> interface, which requires
+        <code>startTime</code> and <code>endTime</code>, and can be accessed by
+        the <code><a>video</a></code> element by adding the
+        <code><a>TextTrackCue</a></code> to the <code><a>TextTrack</a></code>
+        associated with the <code><a>HTMLMediaElement</a></code>. Besides, the
+        <code><a>TextTrack</a></code> can rely on its
+        <code><a href="http://www.w3.org/TR/html51/semantics.html#handler-texttrack-oncuechange">oncuechange</a></code>
+        event to realize a TV trigger becomes active or dismissed.
+      </p>
+      <dl title="interface TVTriggerCue : TextTrackCue" class="idl">
+        <dt>readonly attribute TVTriggerType type</dt>
+          <dd>
+            MUST return the type of the TV trigger.
+          </dd>
+        <dt>readonly attribute object? supplementalData</dt>
+          <dd>
+            MUST return the supplemental information for the TV trigger. Please
+            note that the detailed data might vary between different
+            broadcasting standards.
+          </dd>
+        <dt>readonly attribute object? contentSourceData</dt>
+          <dd>
+            MUST return the content source information for the TV trigger.
+            Please note that the detailed data might vary between different
+            broadcasting standards.
+          </dd>
+         <dt>readonly attribute MediaStream? stream</dt>
+          <dd>
+            MUST return the MediaStream object that could be played for the TV
+            trigger.
           </dd>
       </dl>
     </section>
@@ -1087,8 +1137,9 @@
       <dl title="interface TVEmergencyAlertedEvent : Event" class="idl">
         <dt>readonly attribute DOMString? severityLevel</dt>
           <dd>
-            MUST return the severity level of the emergency alert. The
-            classification of severity level might differ in different regions.
+            MUST return the severity level of the emergency alert. Please note
+            that the classification of severity level might vary between
+            different broadcasting standards.
             MUST return <em>null</em> when the emergency announcement is over.
           </dd>
         <dt>readonly attribute DOMString? description</dt>
@@ -1301,6 +1352,45 @@
         <dt>stopped</dt>
           <dd>
             The state of scanning the TV channels is stopped by the TV source.
+          </dd>
+      </dl>
+
+      <p>
+        The attribute <code>type</code> in the <a>TVTriggerCue</a> can have the
+        following values:
+      </p>
+      <dl title="enum TVTriggerType" class="idl">
+        <dt>channel-change</dt>
+          <dd>
+            Triggers when channel is switched.
+          </dd>
+        <dt>time</dt>
+          <dd>
+            Triggers based on date and time.
+          </dd>
+        <dt>content-boundary</dt>
+          <dd>
+            Triggers based on content boundary.
+          </dd>
+        <dt>fingerprint</dt>
+          <dd>
+            Triggers based on content fingerprints.
+          </dd>
+        <dt>watermark</dt>
+          <dd>
+            Triggers based on content watermarks.
+          </dd>
+        <dt>context</dt>
+          <dd>
+            Triggers based on contextual information in content.
+          </dd>
+        <dt>segment</dt>
+          <dd>
+            Triggers based on program chapters or other segments within the program.
+          </dd>
+        <dt>caption</dt>
+          <dd>
+            Triggers based on subtitle captions.
           </dd>
       </dl>
     </section>
