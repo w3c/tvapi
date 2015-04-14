@@ -1135,6 +1135,12 @@
         related to the emergency alert that is broadcasted by the TV source.
       </p>
       <dl title="interface TVEmergencyAlertedEvent : Event" class="idl">
+        <dt>readonly attribute DOMString? type</dt>
+          <dd>
+            MUST return the the nature of the emergency, i.e. “Earthquake”,
+            "Tsunami", “Child Abduction”. Please note that the classification
+            might vary between different broadcasting standards.
+          </dd>
         <dt>readonly attribute DOMString? severityLevel</dt>
           <dd>
             MUST return the severity level of the emergency alert. Please note
@@ -1144,7 +1150,7 @@
           </dd>
         <dt>readonly attribute DOMString? description</dt>
           <dd>
-            MUST return the description of the emergency alert.
+            MUST return the human readable description of the emergency alert.
           </dd>
         <dt>readonly attribute TVChannel? channel</dt>
           <dd>
@@ -1154,6 +1160,13 @@
         <dt>readonly attribute DOMString? url</dt>
           <dd>
             MUST return the URL where more information might be available.
+          </dd>
+        <dt>sequence&lt;DOMString&gt; getRegions ()</dt>
+          <dd>
+            MUST return the associated regions of the emergency alert. Please
+            note that it might vary between different broadcasting standards. It
+            could return an empty sequence if the emergency system doesn't
+            reveal detailed geographical scope of the alert to the endpoint.
           </dd>
       </dl>
     </section>
