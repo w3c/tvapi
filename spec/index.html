@@ -782,7 +782,7 @@
               <dt>optional TVGetProgramsOptions options</dt>
                 <dd>
                   Specifies the options for retrieving the TV programs. If this
-                  parameter is not passed, this method will retuen all the
+                  parameter is not passed, this method will return all the
                   available TV programs.
                 </dd>
             </dl>
@@ -956,6 +956,12 @@
             language codes specified by ISO 639-2.
           </dd>
 
+        <dt>sequence&lt;DOMString&gt; getGenres ()</dt>
+          <dd>
+            MUST return the genres of the TV program. Please note that the
+            classification might vary between different broadcasting standards.
+          </dd>
+
         <dt>readonly attribute DOMString eventId</dt>
           <dd>
             MUST return the event ID of the TV program. It has to be unique only
@@ -974,23 +980,34 @@
 
         <dt>readonly attribute unsigned long long startTime</dt>
           <dd>
-            MUST return the start time of the TV program.
+            MUST return the start time (in milliseconds) of the TV program.
           </dd>
 
         <dt>readonly attribute unsigned long long duration</dt>
           <dd>
-            MUST return the duration of the TV program.
+            MUST return the duration (in milliseconds) of the TV program.
           </dd>
 
-        <dt>readonly attribute DOMString? description</dt>
+        <dt>readonly attribute DOMString? shortDescription</dt>
           <dd>
-            MUST return the description of the TV program.
+            MUST return the short description of the TV program.
+          </dd>
+
+        <dt>readonly attribute DOMString? longDescription</dt>
+          <dd>
+            MUST return the long description of the TV program.
           </dd>
 
         <dt>readonly attribute DOMString? rating</dt>
           <dd>
             MUST return the rating of the TV program.
           </dd>
+
+        <dt>readonly attribute boolean isFree</dt>
+          <dd>
+            MUST indicate whether the TV program is free to watch.
+          </dd>
+
       </dl>
     </section>
 
@@ -1060,32 +1077,19 @@
         retrieving the TV programs.
       </p>
       <dl title="dictionary TVGetProgramsOptions" class="idl">
-        <dt>unsigned long offsetOfPrograms</dt>
-          <dd>
-            Specifies how many TV programs to be skipped from the time point
-            of now. E.g., if this option is passed as <code>1</code>, the
-            method will skip the current TV program and return the ones starting
-            with the next TV program.
-          </dd>
-        <dt>unsigned long numberOfPrograms</dt>
-          <dd>
-            Specifies how many TV programs to be retrieved from the time point
-            of now. E.g., if this option is passed as <code>1</code>, the
-            method will return the TV program that is currently broadcasted by
-            the TV channel at this moment; if it is passed as <code>2</code>,
-            the method will return the current and the next TV programs. Passing
-            0 implies no effect. Besides, the number of returned TV programs
-            could be less than this value if there are not that many programs.
-          </dd>
         <dt>unsigned long long startTime</dt>
           <dd>
             Specifies the start time of a time period which bounds the time
             slots of TV programs to be retrieved.
           </dd>
-        <dt>unsigned long long duration</dt>
+        <dt>unsigned long long endTime</dt>
           <dd>
-            Specifies the duration of a time period which bounds the time slots
+            Specifies the end time of a time period which bounds the time slots
             of TV programs to be retrieved.
+          </dd>
+        <dt>DOMString genre</dt>
+          <dd>
+            Specifies the genre of TV programs to be retrieved.
           </dd>
       </dl>
     </section>
@@ -1119,7 +1123,8 @@
         <dt>readonly attribute object programs</dt>
           <dd>
             MUST return the available TV programs in the EIT that is broadcasted
-            by the TV source. Please note that the cached value for this array
+            by the TV source. Please note that it needs to be casted into a list
+            of <code>TVProgram</code> instances. The cached value for this array
             needs to go into an internal slot for the object, and it should be
             cached there until the next time that the underlying array changes
             when the cached value will be updated.
