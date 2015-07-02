@@ -184,13 +184,21 @@
         a set of operations that can be used to manage the TV device.
       </p>
 
-      <dl title="interface TVManager" class="idl">
+      <dl title="interface TVManager : EventTarget" class="idl">
         <dt>Promise getTuners ()</dt>
           <dd>
             This method makes a request to retrieve all the TV tuners that are
             available in the TV device. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is an array of <a>TVTuner</a> elements.
+          </dd>
+        <dt class="no-docs">
+          attribute EventHandler ontunerchanged
+        </dt>
+          <dd>
+            Handles the <code>ontunerchanged</code> event of type
+            <a>TVTunerChangedEvent</a>, fired when the TV device detects a TV
+            tuner is added/removed.
           </dd>
       </dl>
 
@@ -233,6 +241,36 @@
             </li>
           </ol>
         </ol>
+      </section>
+
+      <section>
+        <h2>Event handlers</h2>
+        <p>The following are the <a class="internalDFN"
+        href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
+        class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
+        supported as attributes by the <a>TVManager</a> object.
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Event handler</th>
+              <th>Event name</th>
+              <th>Event type</th>
+              <th>Short description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>ontunerchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">tunerchanged</dfn></code></td>
+              <td><a><code>TVTunerChangedEvent</code></a></td>
+              <td>
+                Handles the information of the TV tuner that is added/removed
+                by the TV device.
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
 
     </section>
@@ -300,6 +338,12 @@
             MUST return <em>null</em> if the TV tuner is not streaming any data,
             which happens when the streaming signal is broken or due to any
             other reasons that the TV tuner fails to stream the data.
+          </dd>
+
+        <dt>readonly attribute double signalStrength</dt>
+          <dd>
+            MUST return the signal strength measured in dBm of the TV tuner.
+            E.g. -31.5.
           </dd>
 
         <dt class="no-docs">
@@ -1033,6 +1077,23 @@
           <dd>
             MUST return the type of the TV trigger.
           </dd>
+        <dt>readonly attribute DOMString? title</dt>
+          <dd>
+            MUST return the human readable title for the TV trigger.
+          </dd>
+        <dt>readonly attribute DOMString? url</dt>
+          <dd>
+            MUST return the URL for the TV trigger.
+          </dd>
+        <dt>readonly attribute TVChannel? channel</dt>
+          <dd>
+            MUST return the channel associated with the TV trigger.
+          </dd>
+        <dt>readonly attribute MediaStream? stream</dt>
+          <dd>
+            MUST return the MediaStream object that could be played for the TV
+            trigger.
+          </dd>
         <dt>readonly attribute object? supplementalData</dt>
           <dd>
             MUST return the supplemental information for the TV trigger. Please
@@ -1044,11 +1105,6 @@
             MUST return the content source information for the TV trigger.
             Please note that the detailed data might vary between different
             broadcasting standards.
-          </dd>
-         <dt>readonly attribute MediaStream? stream</dt>
-          <dd>
-            MUST return the MediaStream object that could be played for the TV
-            trigger.
           </dd>
       </dl>
     </section>
@@ -1090,6 +1146,26 @@
         <dt>DOMString genre</dt>
           <dd>
             Specifies the genre of TV programs to be retrieved.
+          </dd>
+      </dl>
+    </section>
+
+<!-- - - - - - - - - - Interface TVTunerChangedEvent - - - - - - - - - - -->
+    <section>
+      <h2><a>TVTunerChangedEvent</a> Interface</h2>
+      <p>
+        The <a>TVTunerChangedEvent</a> interface represents the event related
+        to the TV tuner that is added/removed by the TV device.
+      </p>
+      <dl title="interface TVTunerChangedEvent : Event" class="idl">
+        <dt>readonly attribute TVTunerChangedEventOperation operation</dt>
+          <dd>
+            MUST return the type of operation that changes the TV tuner.
+          </dd>
+
+        <dt>readonly attribute DOMString id</dt>
+          <dd>
+            MUST return the ID of the TV tuner that is added/removed.
           </dd>
       </dl>
     </section>
@@ -1341,6 +1417,22 @@
         <dt>data</dt>
           <dd>
             The TV channel is broadcasted as a data type.
+          </dd>
+      </dl>
+
+      <p>
+        The attribute <code>operation</code> in the <a>TVTunerChangedEvent</a>
+        can have the following values:
+      </p>
+      <dl title="enum TVTunerChangedEventOperation" class="idl">
+        <dt>added</dt>
+          <dd>
+            A TV tuner is added.
+          </dd>
+
+        <dt>removed</dt>
+          <dd>
+            A TV tuner is removed.
           </dd>
       </dl>
 
