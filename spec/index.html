@@ -1033,6 +1033,23 @@
           <dd>
             MUST return the type of the TV trigger.
           </dd>
+        <dt>readonly attribute DOMString? title</dt>
+          <dd>
+            MUST return the human readable title for the TV trigger.
+          </dd>
+        <dt>readonly attribute DOMString? url</dt>
+          <dd>
+            MUST return the URL for the TV trigger.
+          </dd>
+        <dt>readonly attribute TVChannel? channel</dt>
+          <dd>
+            MUST return the channel associated with the TV trigger.
+          </dd>
+        <dt>readonly attribute MediaStream? stream</dt>
+          <dd>
+            MUST return the MediaStream object that could be played for the TV
+            trigger.
+          </dd>
         <dt>readonly attribute object? supplementalData</dt>
           <dd>
             MUST return the supplemental information for the TV trigger. Please
@@ -1044,11 +1061,6 @@
             MUST return the content source information for the TV trigger.
             Please note that the detailed data might vary between different
             broadcasting standards.
-          </dd>
-         <dt>readonly attribute MediaStream? stream</dt>
-          <dd>
-            MUST return the MediaStream object that could be played for the TV
-            trigger.
           </dd>
       </dl>
     </section>
