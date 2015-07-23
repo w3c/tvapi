@@ -460,7 +460,7 @@
             supported TV sources.
           </dd>
 
-        <dt>Promise getSources ()</dt>
+        <dt>Promise&lt;sequence&lt;TVSource&gt;&gt; getSources ()</dt>
           <dd>
             This method makes a request to retrieve all the TV sources that are
             available in the TV tuner. It returns a new <code><a>Promise</a></code>
@@ -469,7 +469,7 @@
             to the TV tuner.
           </dd>
 
-        <dt>Promise setCurrentSource ()</dt>
+        <dt>Promise&lt;void&gt; setCurrentSource ()</dt>
           <dd>
             This method makes a request to configure the current TV source of
             the TV tuner by the <code>sourceType</code> parameter. It returns a
@@ -645,7 +645,7 @@
       </p>
       <dl title="interface TVSource : EventTarget" class="idl">
 
-        <dt>Promise getChannels ()</dt>
+        <dt>Promise&lt;sequence&lt;TVChannel&gt;&gt; getChannels ()</dt>
           <dd>
             This method makes a request to retrieve all the TV channels that are
             available in the TV source. It returns a new <code><a>Promise</a></code>
@@ -656,7 +656,7 @@
             called during channel scanning.
           </dd>
 
-        <dt>Promise setCurrentChannel ()</dt>
+        <dt>Promise&lt;void&gt; setCurrentChannel ()</dt>
           <dd>
             This method makes a request to tune the currently streamed TV
             channel by the <code>channelNumber</code> parameter. It returns a
@@ -673,7 +673,7 @@
             </dl>
           </dd>
 
-        <dt>Promise startScanning ()</dt>
+        <dt>Promise&lt;void&gt; startScanning ()</dt>
           <dd>
             This method makes a request to start scanning all the TV channels
             that are available in the TV source by the <code>options</code>
@@ -697,7 +697,7 @@
             </dl>
           </dd>
 
-        <dt>Promise stopScanning ()</dt>
+        <dt>Promise&lt;void&gt; stopScanning ()</dt>
           <dd>
             This method makes a request to stop scanning the TV channels for the
             TV source. It returns a new <code><a>Promise</a></code> that will be used
@@ -990,7 +990,7 @@
       </p>
       <dl title="interface TVChannel : EventTarget" class="idl">
 
-        <dt>Promise getPrograms ()</dt>
+        <dt>Promise&lt;sequence&lt;TVProgram&gt;&gt; getPrograms ()</dt>
           <dd>
             This method makes a request to retrieve all the TV programs that are
             available in the TV channel by the <code>options</code> parameter.
@@ -1007,7 +1007,7 @@
             </dl>
           </dd>
 
-        <dt>Promise getCurrentProgram ()</dt>
+        <dt>Promise&lt;TVProgram&gt; getCurrentProgram ()</dt>
           <dd>
             This method makes a request to retrieve the current TV program
             available in the TV channel. It returns a new <code><a>Promise</a></code>
