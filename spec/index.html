@@ -202,15 +202,17 @@
             associated <a>TVProgram</a> object. It returns a new
             <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation, which is a newly-created
-            <a>TVRecorder</a> object. <br/>
-            Please note the user agent should have a
-            recording scheduler which handles time conflicts between recording
-            requests. If this method tries to add a new request with a time
-            frame overlapped with some existent ones, and given no sufficient
-            resource (i.e. tuner) to meet the request, the
-            <code><a>Promise</a></code> should be rejected. The web content may
-            handle this situation with its own strategy, such as explicitly
-            removing the conflicts and re-adding the one to conserve.
+            <a>TVRecorder</a> object.<br/>
+            Please note the user agent should have a recording scheduler which
+            handles time conflicts between recording requests. If this method
+            tries to add a new request with a time frame overlapped with some
+            existent ones, and given suffiecient resource (i.e. tuner), a new TV
+            recorder should be created and the scheduler should ensure multiple
+            TV recorders to run at the same time. However, if the resource is
+            not suffiecient to meet the new request, the <code><a>Promise</a></code>
+            should be rejected. Applications may handle this situation with
+            their own strategy, such as explicitly removing the conflicts and
+            re-adding the one to conserve.
           </dd>
 
         <dt>Promise&lt;void&gt; removeRecorder (DOMString id)</dt>
@@ -1287,7 +1289,10 @@
         a set of operations related to the TV recorder. The recorder should
         automatically start recording at the specified start time. And it may
         stop either at the specified end time, by an explicit <code>stop()</code>
-        call, or get interrupted by the user agent due to an error.
+        call, or get interrupted by the user agent due to a channel switch
+        against required underlying resource (i.e. the same tuner which the
+        recording channel belongs to since watching takes priority over
+        recording) or an error.
       </p>
       <dl title="interface TVRecorder" class="idl">
         <dt>Promise&lt;TVBufferedMediaStream&gt; getStream ()</dt>
@@ -1620,7 +1625,7 @@
         <h3>Time-shifting</h3>
 
         <p>
-          The web page may utilize <a>TVRecorder</a> and <a>TVBufferedMediaStream</a>
+          Applications may utilize <a>TVRecorder</a> and <a>TVBufferedMediaStream</a>
           to fulfill time-shifting scenarios. When time-shifting is enabled, it
           may add a TV recorder for the current playing channel without specifying
           start time, which makes the recording starts from now on, or instead by
@@ -1629,13 +1634,13 @@
           switch to the time-shifted content, the <a>TVBufferedMediaStream</a>
           generated from the TV recorder can be assigned to the <code><a>video</a></code>
           element used for playing the current <code><a>MediaStream</a></code>.
-          So the web page may play with the <code><a>video</a></code> element to
-          set proper playback rates, seek to specific time, play/pause the
+          So the application may play with the <code><a>video</a></code> element
+          to set proper playback rates, seek to specific time, play/pause the
           buffered stream, and listen to some correspondent events. And when
           time-shifting is switched off (i.e. the recorded content has been fast
-          forwarded to the current end), the web page should assign the original
+          forwarded to the current end), the application should assign the original
           <code><a>MediaStream</a></code> back to the <code><a>video</a></code>
-          element. Please note the web page may need to regularly clean up old
+          element. Please note applications may need to regularly clean up old
           TV recorders used for time-shifting.
         </p>
       </section>
