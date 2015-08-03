@@ -195,36 +195,36 @@
             operation, which is an array of <a>TVTuner</a> elements.
           </dd>
 
-        <dt>Promise&lt;TVRecorder&gt; addRecorder (TVAddRecorderOptions option)</dt>
+        <dt>Promise&lt;TVRecording&gt; addRecording (TVAddRecordingOptions option)</dt>
           <dd>
             This method is to add a recording request for a given channel with
             explicitly specified start time and end time, or instead an
             associated <a>TVProgram</a> object. It returns a new
             <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation, which is a newly-created
-            <a>TVRecorder</a> object.<br/>
+            <a>TVRecording</a> object.<br/>
             Please note the user agent should have a recording scheduler which
             handles time conflicts between recording requests. If this method
             tries to add a new request with a time frame overlapped with some
             existent ones, and given suffiecient resource (i.e. tuner), a new TV
-            recorder should be created and the scheduler should ensure multiple
-            TV recorders to run at the same time. However, if the resource is
+            recording should be created and the scheduler should ensure multiple
+            TV recordings to run at the same time. However, if the resource is
             not suffiecient to meet the new request, the <code><a>Promise</a></code>
             should be rejected. Applications may handle this situation with
             their own strategy, such as explicitly removing the conflicts and
             re-adding the one to conserve.
           </dd>
 
-        <dt>Promise&lt;void&gt; removeRecorder (DOMString id)</dt>
+        <dt>Promise&lt;void&gt; removeRecording (DOMString id)</dt>
           <dd>
             This method makes a request to remove a given record. It returns a
             new <code><a>Promise</a></code> that will be used to notify the
             caller about the result of the operation.
           </dd>
 
-        <dt>Promise&lt;sequence&lt;TVRecorder&gt;&gt; getRecorders (optional TVGetRecordersOptions option)</dt>
+        <dt>Promise&lt;sequence&lt;TVRecording&gt;&gt; getRecordings (optional TVGetRecordingsOptions option)</dt>
           <dd>
-            This method makes a request to retrieve the available TV recorders
+            This method makes a request to retrieve the available TV recordings
             according to the given criteria. It returns a new
             <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation.
@@ -250,12 +250,12 @@
           </dd>
 
         <dt class="no-docs">
-          attribute EventHandler onrecorderchanged
+          attribute EventHandler onrecordingchanged
         </dt>
           <dd>
-            Handles the <code>recorderchanged</code> event of type
-            <a>TVRecorderChangedEvent</a>, fired when the recording time frame
-            or the state of the TV recorder has been changed.
+            Handles the <code>recordingchanged</code> event of type
+            <a>TVRecordingChangedEvent</a>, fired when the recording time frame
+            or the state of the TV recording has been changed.
           </dd>
       </dl>
 
@@ -300,7 +300,7 @@
         </ol>
 
         <p>
-          The <dfn><code>addRecorder</code></dfn> method when invoked MUST run
+          The <dfn><code>addRecording</code></dfn> method when invoked MUST run
           the following steps:
         </p>
         <ol>
@@ -324,19 +324,19 @@
           </li>
           <ol>
             <li>
-              Let <var>recorder</var> be the newly-created <a>TVRecorder</a>
+              Let <var>recording</var> be the newly-created <a>TVRecording</a>
               object.
             </li>
             <li>
               Invoke <em>resolver</em>'s <a
               class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
-              with <em>recorder</em> as the <code>value</code> argument.
+              with <em>recording</em> as the <code>value</code> argument.
             </li>
           </ol>
         </ol>
 
         <p>
-          The <dfn><code>removeRecorder</code></dfn> method when invoked MUST run
+          The <dfn><code>removeRecording</code></dfn> method when invoked MUST run
           the following steps:
         </p>
         <ol>
@@ -368,7 +368,7 @@
         </ol>
 
         <p>
-          The <dfn><code>getRecorders</code></dfn> method when invoked MUST run
+          The <dfn><code>getRecordings</code></dfn> method when invoked MUST run
           the following steps:
         </p>
         <ol>
@@ -381,7 +381,7 @@
           </li>
           <li>
             Make a request to the recording scheduler to retrieve the available
-            TV recorders.
+            TV recordings.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -393,13 +393,13 @@
           </li>
           <ol>
             <li>
-              Let <var>recorders</var> be the array of the retrieved <a>TVRecorder</a>
+              Let <var>recordings</var> be the array of the retrieved <a>TVRecording</a>
               elements.
             </li>
             <li>
               Invoke <em>resolver</em>'s <a
               class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
-              with <em>recorders</em> as the <code>value</code> argument.
+              with <em>recordings</em> as the <code>value</code> argument.
             </li>
           </ol>
         </ol>
@@ -433,11 +433,11 @@
               </td>
             </tr>
             <tr>
-              <td><strong><code>onrecorderchanged</code></strong></td>
-              <td><code><dfn id="dfn-change-event">recorderchanged</dfn></code></td>
-              <td><a><code>TVRecorderChangedEvent</code></a></td>
+              <td><strong><code>onrecordingchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">recordingchanged</dfn></code></td>
+              <td><a><code>TVRecordingChangedEvent</code></a></td>
               <td>
-                Handles the information of the updates for TV recorders.
+                Handles the information of the updates for TV recordings.
               </td>
             </tr>
           </tbody>
@@ -1281,12 +1281,12 @@
       </dl>
     </section>
 
-<!-- - - - - - - - - - - - Interface TVRecorder  - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - Interface TVRecording  - - - - - - - - - - - - -->
     <section>
-      <h2><a>TVRecorder</a> Interface</h2>
+      <h2><a>TVRecording</a> Interface</h2>
       <p>
-        The <a>TVRecorder</a> interface represents a bunch of properties and
-        a set of operations related to the TV recorder. The recorder should
+        The <a>TVRecording</a> interface represents a bunch of properties and
+        a set of operations related to the TV recording. The recording should
         automatically start recording at the specified start time. And it may
         stop either at the specified end time, by an explicit <code>stop()</code>
         call, or get interrupted by the user agent due to a channel switch
@@ -1294,7 +1294,7 @@
         recording channel belongs to since watching takes priority over
         recording) or an error.
       </p>
-      <dl title="interface TVRecorder" class="idl">
+      <dl title="interface TVRecording" class="idl">
         <dt>Promise&lt;TVBufferedMediaStream&gt; getStream ()</dt>
           <dd>
             This method makes a request to retrieve the recorded content as a
@@ -1303,76 +1303,76 @@
             <code><a>video</a></code> element by
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
             the <a>TVBufferedMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
-            MUST return <em>null</em> if the TV recorder hasn't actually
+            MUST return <em>null</em> if the TV recording hasn't actually
             recorded anything.
           </dd>
 
         <dt>Promise&lt;void&gt; stop ()</dt>
           <dd>
-            This method makes a request to stop the TV recorder.
+            This method makes a request to stop the TV recording.
           </dd>
 
         <dt>readonly attribute DOMString id</dt>
           <dd>
-            MUST return the ID of the TV recorder.
+            MUST return the ID of the TV recording.
           </dd>
 
         <dt>readonly attribute TVChannel channel</dt>
           <dd>
-            MUST return the associated TV channel of the TV recorder.
+            MUST return the associated TV channel of the TV recording.
           </dd>
 
         <dt>readonly attribute TVProgram? program</dt>
           <dd>
-            MUST return the associated TV program of the TV recorder if applicable.
-            Please note the recorder should keep track of the relevant updates
+            MUST return the associated TV program of the TV recording if applicable.
+            Please note the recording should keep track of the relevant updates
             in Event Information Table (EIT) while <a>program</a> is specified,
             and then update correspondent attributes and fire a
-            <a>TVRecorderChangedEvent</a> accordingly. Furthermore, if the
+            <a>TVRecordingChangedEvent</a> accordingly. Furthermore, if the
             updated time frame conflicts with some existent ones, and there's no
-            sufficient resource (i.e. tuner) to meet this, then the recorder
+            sufficient resource (i.e. tuner) to meet this, then the recording
             should change its state to <code>stopped</code>.
           </dd>
 
         <dt>readonly attribute unsigned long long startTime</dt>
           <dd>
-            MUST return the start time (in milliseconds) of the TV recorder.
+            MUST return the start time (in milliseconds) of the TV recording.
           </dd>
 
         <dt>readonly attribute unsigned long long endTime</dt>
           <dd>
-            MUST return the end time (in milliseconds) of the TV recorder.
+            MUST return the end time (in milliseconds) of the TV recording.
           </dd>
 
         <dt>readonly attribute TVRecordingState state</dt>
           <dd>
-            MUST return the current state of the TV recorder.
+            MUST return the current state of the TV recording.
           </dd>
 
         <dt>readonly attribute unsigned long long size</dt>
           <dd>
-            MUST return the actual size of the TV recorder. Please note the
-            value should be zero if the TV recorder hasn't actually recorded
+            MUST return the actual size of the TV recording. Please note the
+            value should be zero if the TV recording hasn't actually recorded
             anything.
           </dd>
 
         <dt>readonly attribute unsigned long long duration</dt>
           <dd>
-            MUST return the actual duration of the TV recorder. Please note the
-            value should be zero if the TV recorder hasn't actually recorded
+            MUST return the actual duration of the TV recording. Please note the
+            value should be zero if the TV recording hasn't actually recorded
             anything.
           </dd>
 
         <dt>attribute DOMString description</dt>
           <dd>
-            MUST return the description of the TV recorder.
+            MUST return the description of the TV recording.
           </dd>
 
-        <dt>attribute EventHandler onrecorderchanged</dt>
+        <dt>attribute EventHandler onrecordingchanged</dt>
           <dd>
-            Handles the <code>recorderchanged</code> event of type
-            <a>TVRecorderChangedEvent</a>, fired when the recording time frame
-            or the state of the TV recorder has been changed.
+            Handles the <code>recordingchanged</code> event of type
+            <a>TVRecordingChangedEvent</a>, fired when the recording time frame
+            or the state of the TV recording has been changed.
           </dd>
       </dl>
 
@@ -1393,7 +1393,7 @@
           </li>
           <li>
             Make a request to the TV source to retrieve the recorded content that
-            is available in the TV recorder.
+            is available in the TV recording.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -1429,7 +1429,7 @@
             Return <var>promise</var> to the caller.
           </li>
           <li>
-            Make a request to the TV recorder to stop it.
+            Make a request to the TV recording to stop it.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -1455,7 +1455,7 @@
         <p>The following are the <a class="internalDFN"
         href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
         class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
-        supported as attributes by the <a>TVRecorder</a> object.
+        supported as attributes by the <a>TVRecording</a> object.
 
         <table class="simple">
           <thead>
@@ -1468,11 +1468,11 @@
           </thead>
           <tbody>
             <tr>
-              <td><strong><code>onrecorderchanged</code></strong></td>
-              <td><code>recorderchanged</code></td>
-              <td><a><code>TVRecorderChangedEvent</code></a></td>
+              <td><strong><code>onrecordingchanged</code></strong></td>
+              <td><code>recordingchanged</code></td>
+              <td><a><code>TVRecordingChangedEvent</code></a></td>
               <td>
-                Handles the information of the updates for TV recorders.
+                Handles the information of the updates for TV recordings.
               </td>
             </tr>
           </tbody>
@@ -1625,14 +1625,14 @@
         <h3>Time-shifting</h3>
 
         <p>
-          Applications may utilize <a>TVRecorder</a> and <a>TVBufferedMediaStream</a>
+          Applications may utilize <a>TVRecording</a> and <a>TVBufferedMediaStream</a>
           to fulfill time-shifting scenarios. When time-shifting is enabled, it
-          may add a TV recorder for the current playing channel without specifying
+          may add a TV recording for the current playing channel without specifying
           start time, which makes the recording starts from now on, or instead by
           specifying the live TV program. (The user agent should be able to play
           and record the same channel at the same time.) Then when it comes to
           switch to the time-shifted content, the <a>TVBufferedMediaStream</a>
-          generated from the TV recorder can be assigned to the <code><a>video</a></code>
+          generated from the TV recording can be assigned to the <code><a>video</a></code>
           element used for playing the current <code><a>MediaStream</a></code>.
           So the application may play with the <code><a>video</a></code> element
           to set proper playback rates, seek to specific time, play/pause the
@@ -1641,7 +1641,7 @@
           forwarded to the current end), the application should assign the original
           <code><a>MediaStream</a></code> back to the <code><a>video</a></code>
           element. Please note applications may need to regularly clean up old
-          TV recorders used for time-shifting.
+          TV recordings used for time-shifting.
         </p>
       </section>
 
@@ -1688,17 +1688,17 @@
       </dl>
     </section>
 
-<!-- - - - - - - - - - Dictionary TVAddRecorderOptions   - - - - - - - - - -->
+<!-- - - - - - - - - - Dictionary TVAddRecordingOptions   - - - - - - - - - -->
     <section>
-      <h2><a>TVAddRecorderOptions</a> Dictionary</h2>
+      <h2><a>TVAddRecordingOptions</a> Dictionary</h2>
       <p>
-        The <a>TVAddRecorderOptions</a> dictionary contains the information for
-        adding a TV recorder.
+        The <a>TVAddRecordingOptions</a> dictionary contains the information for
+        adding a TV recording.
       </p>
-      <dl title="dictionary TVAddRecorderOptions" class="idl">
+      <dl title="dictionary TVAddRecordingOptions" class="idl">
         <dt>DOMString description</dt>
           <dd>
-            Specifies the description of the TV recorder.
+            Specifies the description of the TV recording.
           </dd>
         <dt>TVChannel channel</dt>
           <dd>
@@ -1721,28 +1721,28 @@
           <dd>
             Specifies the end time of a recording time frame. When not specified,
             it implies the recording should continue until a <code>stop()</code>
-            call of <a>TVRecorder</a> or the user agent forces it to stop due to
+            call of <a>TVRecording</a> or the user agent forces it to stop due to
             resource control. Please note this could also be ommited and auto
             determined if <code>program</code> is specified.
           </dd>
       </dl>
     </section>
 
-<!-- - - - - - - - - - Dictionary TVGetRecordersOptions   - - - - - - - - - -->
+<!-- - - - - - - - - - Dictionary TVGetRecordingsOptions   - - - - - - - - - -->
     <section>
-      <h2><a>TVGetRecordersOptions</a> Dictionary</h2>
+      <h2><a>TVGetRecordingsOptions</a> Dictionary</h2>
       <p>
-        The <a>TVGetRecordersOptions</a> dictionary contains the information for
-        retrieving the TV recorders.
+        The <a>TVGetRecordingsOptions</a> dictionary contains the information for
+        retrieving the TV recordings.
       </p>
-      <dl title="dictionary TVGetRecordersOptions" class="idl">
+      <dl title="dictionary TVGetRecordingsOptions" class="idl">
         <dt>TVRecordingState? state</dt>
           <dd>
-            Specifies the state of the TV recorders to be retrieved.
+            Specifies the state of the TV recordings to be retrieved.
           </dd>
         <dt>DOMString? id</dt>
           <dd>
-            Specifies the ID of the TV recorder to be retrieved.
+            Specifies the ID of the TV recording to be retrieved.
           </dd>
       </dl>
     </section>
@@ -1891,28 +1891,28 @@
       </dl>
     </section>
 
-<!-- - - - - - - - Interface TVRecorderChangedEvent - - - - - - - - - - - - -->
+<!-- - - - - - - - Interface TVRecordingChangedEvent - - - - - - - - - - - - -->
     <section>
-      <h2><a>TVRecorderChangedEvent</a> Interface</h2>
+      <h2><a>TVRecordingChangedEvent</a> Interface</h2>
       <p>
-        The <a>TVRecorderChangedEvent</a> interface represents the event related
-        to the update of a TV recorder.
+        The <a>TVRecordingChangedEvent</a> interface represents the event related
+        to the update of a TV recording.
       </p>
-      <dl title="interface TVRecorderChangedEvent : Event" class="idl">
+      <dl title="interface TVRecordingChangedEvent : Event" class="idl">
         <dt>readonly attribute DOMString id</dt>
           <dd>
-            MUST return the ID of the updated TV recorder.
+            MUST return the ID of the updated TV recording.
           </dd>
 
         <dt>readonly attribute boolean isTimeChange</dt>
           <dd>
-            MUST indicate whether the recording time frame of the TV recorder
+            MUST indicate whether the recording time frame of the TV recording
             has changed.
           </dd>
 
         <dt>readonly attribute boolean isStateChange</dt>
           <dd>
-            MUST indicate whether the state of the TV recorder has changed.
+            MUST indicate whether the state of the TV recording has changed.
           </dd>
 
         <dt>readonly attribute DOMString? errorName</dt>
@@ -2135,7 +2135,7 @@
     </section>
 
       <p>
-        The attribute <code>state</code> in <a>TVRecorder</a> can have the
+        The attribute <code>state</code> in <a>TVRecording</a> can have the
         following values:
       </p>
       <dl title="enum TVRecordingState" class="idl">
