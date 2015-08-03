@@ -566,7 +566,7 @@
               </li>
               <li>
                 Invoke <em>resolver</em>'s <a class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
-                with <em>channels</em> as the <code>value</code> argument.
+                with <em>sources</em> as the <code>value</code> argument.
               </li>
             </ol>
           </li>
@@ -1358,9 +1358,9 @@
 
         <dt>readonly attribute unsigned long long duration</dt>
           <dd>
-            MUST return the actual duration of the TV recording. Please note the
-            value should be zero if the TV recording hasn't actually recorded
-            anything.
+            MUST return the actual duration (in milliseconds) of the TV recording.
+            Please note the value should be zero if the TV recording hasn't
+            actually recorded anything.
           </dd>
 
         <dt>attribute DOMString description</dt>
