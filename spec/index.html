@@ -201,7 +201,7 @@
             operation, which is an array of <a>TVTuner</a> elements.
           </dd>
 
-        <dt>Promise&lt;TVRecording&gt; addRecording (TVAddRecordingOptions option)</dt>
+        <dt>Promise&lt;TVRecording&gt; addRecording ()</dt>
           <dd>
             This method is to add a recording request for a given channel with
             explicitly specified start time and end time, or instead an
@@ -219,21 +219,39 @@
             should be rejected. Applications may handle this situation with
             their own strategy, such as explicitly removing the conflicts and
             re-adding the one to conserve.
+            <dl class='parameters'>
+              <dt>TVAddRecordingOptions option</dt>
+                <dd>
+                  Specifies the options for adding recording.
+                </dd>
+            </dl>
           </dd>
 
-        <dt>Promise&lt;void&gt; removeRecording (DOMString id)</dt>
+        <dt>Promise&lt;void&gt; removeRecording ()</dt>
           <dd>
             This method makes a request to remove a given record. It returns a
             new <code><a>Promise</a></code> that will be used to notify the
             caller about the result of the operation.
+            <dl class='parameters'>
+              <dt>DOMString id</dt>
+                <dd>
+                  Specifies the ID of the removing recording.
+                </dd>
+            </dl>
           </dd>
 
-        <dt>Promise&lt;sequence&lt;TVRecording&gt;&gt; getRecordings (optional TVGetRecordingsOptions option)</dt>
+        <dt>Promise&lt;sequence&lt;TVRecording&gt;&gt; getRecordings ()</dt>
           <dd>
             This method makes a request to retrieve the available TV recordings
             according to the given criteria. It returns a new
             <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation.
+            <dl class='parameters'>
+              <dt>optional TVGetRecordingsOptions option</dt>
+                <dd>
+                  Specifies the options for getting recordings.
+                </dd>
+            </dl>
           </dd>
 
         <dt>Promise&lt;void&gt; setParentalControlPin ()</dt>
@@ -1934,11 +1952,11 @@
         adding a TV recording.
       </p>
       <dl title="dictionary TVAddRecordingOptions" class="idl">
-        <dt>DOMString description</dt>
+        <dt>required DOMString description</dt>
           <dd>
             Specifies the description of the TV recording.
           </dd>
-        <dt>TVChannel channel</dt>
+        <dt>required TVChannel channel</dt>
           <dd>
             Specifies the channel to be recorded.
           </dd>
