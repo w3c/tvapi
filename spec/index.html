@@ -114,6 +114,12 @@
       </p>
 
       <p>
+        The <dfn><a href="http://www.w3.org/TR/dom/#interface-event">Event</a></dfn>
+        and <dfn><a href="http://www.w3.org/TR/dom/#interface-eventtarget">
+        EventTarget</a></dfn> interfaces are defined in [[!DOM]].
+      </p>
+
+      <p>
         The concepts <dfn><a
         href="http://dev.w3.org/html5/spec/webappapis.html#queue-a-task"> queue
         a task</a></dfn> and <dfn><a
@@ -230,6 +236,45 @@
             about the result of the operation.
           </dd>
 
+        <dt>Promise&lt;void&gt; setParentalControlPin ()</dt>
+          <dd>
+            This method makes a request to set the TV parental control PIN used
+            for enabling or disabling parental control. It returns a new
+            <code>Promise</code> that will be used to notify the caller about
+            the result of the operation. Note that the <code><a>Promise</a></code>
+            may be rejected with an <code>InvalidAccessError</code> if the old PIN
+            mismatches the current one.
+            <dl class='parameters'>
+              <dt>DOMString oldPin</dt>
+                <dd>
+                  Specifies the old PIN used for parental control.
+                </dd>
+              <dt>DOMString newPin</dt>
+                <dd>
+                  Specifies the new PIN used for parental control.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>Promise&lt;void&gt; setParentalControl ()</dt>
+          <dd>
+            This method makes a request to set the TV parental control status.
+            It returns a new <code>Promise</code> that will be used to notify
+            the caller about the result of the operation. Note that the
+            <code><a>Promise</a></code> may be rejected with an
+            <code>InvalidAccessError</code> if the PIN mismatches the current one.
+            <dl class='parameters'>
+              <dt>DOMString pin</dt>
+                <dd>
+                  Specifies the PIN used for parental control.
+                </dd>
+              <dt>boolean isLocked</dt>
+                <dd>
+                  Specifies the parental control status.
+                </dd>
+            </dl>
+          </dd>
+
         <dt>readonly attribute unsigned long long totalRecordingSize</dt>
           <dd>
             MUST return the total recording size of the TV device.
@@ -238,6 +283,13 @@
         <dt>readonly attribute unsigned long long availableRecordingSize</dt>
           <dd>
             MUST return the current available recording size of the TV device.
+          </dd>
+
+        <dt>readonly attribute boolean isParentalControlled</dt>
+          <dd>
+            MUST return the current state of the TV parental control, which
+            is system-widely applied to the TV device. Once the parental control
+            is unset, all the locked TV channels/programs will become accesible.
           </dd>
 
         <dt class="no-docs">
@@ -256,6 +308,14 @@
             Handles the <code>recordingchanged</code> event of type
             <a>TVRecordingChangedEvent</a>, fired when the recording time frame
             or the state of the TV recording has been changed.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler onparentalcontrolchanged
+        </dt>
+          <dd>
+            Handles the <code>parentalcontrolchanged</code> event, fired when
+            the parental control status is changed.
           </dd>
       </dl>
 
@@ -404,6 +464,72 @@
           </ol>
         </ol>
 
+        <p>
+          The <dfn><code>setParentalControlPin</code></dfn> method when invoked
+          MUST run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to set the new PIN for parental control according to
+            the <code>newPin</code> parameter.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s
+            <a class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm">fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+        <p>
+          The <dfn><code>setParentalControl</code></dfn> method when invoked
+          MUST run the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to set the new status for parental control according
+            to the <code>isLocked</code> parameter.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s
+            <a class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm">fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
       </section>
 
       <section>
@@ -438,6 +564,14 @@
               <td><a><code>TVRecordingChangedEvent</code></a></td>
               <td>
                 Handles the information of the updates for TV recordings.
+              </td>
+            </tr>
+            <tr>
+              <td><strong><code>onparentalcontrolchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">parentalcontrolchanged</dfn></code></td>
+              <td><a><code>Event</code></a></td>
+              <td>
+                Handles the information of the status changes for parental control.
               </td>
             </tr>
           </tbody>
@@ -665,7 +799,9 @@
             new <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidStateError</code> if this
-            method gets called during channel scanning.
+            method gets called during channel scanning, or be rejected with an
+            <code>InvalidAccessError</code> if parental control is enabled and
+            the channel is locked.
             <dl class='parameters'>
               <dt>DOMString channelNumber</dt>
                 <dd>
@@ -1018,6 +1154,23 @@
             TV channel.
           </dd>
 
+        <dt>Promise&lt;void&gt; setParentalLock ()</dt>
+          <dd>
+            This method makes a request to set the parental lock status for the
+            TV channel. It returns a new <code>Promise</code> that will be used
+            to notify the caller about the result of the operation.
+            <dl class='parameters'>
+              <dt>DOMString pin</dt>
+                <dd>
+                  Specifies the PIN used for parental control.
+                </dd>
+              <dt>boolean isLocked</dt>
+                <dd>
+                  Specifies the parental lock status for the TV channel.
+                </dd>
+            </dl>
+          </dd>
+
         <dt>readonly attribute DOMString networkId</dt>
           <dd>
             MUST return the identification of a broadcast transmission network.
@@ -1074,6 +1227,18 @@
             MUST indicate whether the TV channel is free to watch.
           </dd>
 
+        <dt>readonly attribute boolean isParentalLocked</dt>
+          <dd>
+            MUST indicate whether the TV channel is locked for parental control.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler onparentallockchanged
+        </dt>
+          <dd>
+            Handles the <code>parentallockchanged</code> event, fired when
+            the parental lock status of the TV channel is changed.
+          </dd>
       </dl>
 
       <section>
@@ -1153,6 +1318,71 @@
           </ol>
         </ol>
 
+        <p>
+          The <dfn><code>setParentalLock</code></dfn> method when invoked MUST run the
+          following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to set the new parental lock status for this channel
+            according to the <code>isLocked</code> parameter.
+          </li>
+          <li>
+            If the <code>pin</code> parameter mismatches the current PIN
+            or an <var>error</var> occurs invoke <em>resolver</em>'s
+            <a class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm">fulfill algorithm</a>
+              without assigning a value to the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
+
+      </section>
+
+      <section>
+        <h2>Event handlers</h2>
+        <p>The following are the <a class="internalDFN"
+        href="#dfn-eventhandler">event handlers</a> (and their corresponding <a
+        class="internalDFN" href="#dfn-eventtypes">event types</a>) that MUST be
+        supported as attributes by the <a>TVChannel</a> object.
+
+        <table class="simple">
+          <thead>
+            <tr>
+              <th>Event handler</th>
+              <th>Event name</th>
+              <th>Event type</th>
+              <th>Short description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong><code>onparentallockchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">parentallockchanged</dfn></code></td>
+              <td><a><code>Event</code></a></td>
+              <td>
+                Handles the information of the parental control status change
+                for the TV channel.
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
       </section>
 
     </section>
@@ -1310,7 +1540,9 @@
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
             the <a>TVBufferedMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
             MUST return <em>null</em> if the TV recording hasn't actually
-            recorded anything.
+            recorded anything. Note that the <code><a>Promise</a></code>
+            may be rejected with an <code>InvalidAccessError</code> if parental
+            control is enabled and the recorded channel is locked.
           </dd>
 
         <dt>Promise&lt;void&gt; stop ()</dt>
