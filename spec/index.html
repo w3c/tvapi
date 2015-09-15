@@ -805,9 +805,11 @@
             available in the TV source. It returns a new <code><a>Promise</a></code>
             that will be used to notify the caller about the result of the
             operation, which is an array of <a>TVChannel</a> elements that
-            belong to the TV source. Note that the <code><a>Promise</a></code> may be
-            rejected with an <code>InvalidStateError</code> if this method gets
-            called during channel scanning.
+            belong to the TV source. And if parental control is enabled, the
+            array of <a>TVChannel</a> elements should exclude the locked channels.
+            Note that the <code><a>Promise</a></code> may be rejected with an
+            <code>InvalidStateError</code> if this method gets called during
+            channel scanning.
           </dd>
 
         <dt>Promise&lt;void&gt; setCurrentChannel ()</dt>
