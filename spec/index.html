@@ -177,7 +177,7 @@
     <section>
       <h2><a>Navigator</a> Interface</h2>
       <dl title="partial interface Navigator" class="idl">
-        <dt>readonly attribute TVManager tv</dt>
+        <dt>[SameObject] readonly attribute TVManager tv</dt>
         <dd>
           MUST return the object that exposes the interface to the TV service.
         </dd>
@@ -645,22 +645,24 @@
 
         <dt>readonly attribute TVSource? currentSource</dt>
           <dd>
-            MUST return the currently configured TV source. MUST return
-            <em>null</em> if the TV source is not configured.
+            MUST return the currently configured TV source.<br/>
+            MUST return <em>null</em> if the TV source is not configured.
           </dd>
 
-        <dt>readonly attribute MediaStream? stream</dt>
+        <dt>[SameObject] readonly attribute TVMediaStream? stream</dt>
           <dd>
-            MUST return a <code><a>MediaStream</a></code> object that is
-            currently streamed by the TV tuner, which can be played by the
-            <code><a>video</a></code> element by
+            MUST return a <code><a>TVMediaStream</a></code> object extended from
+            <code><a>MediaStream</a></code> and currently streamed by the TV tuner,
+            which can be played by the <code><a>video</a></code> element by
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
-            the <code><a>MediaStream</a></code> to the
-            <code><a>HTMLMediaElement</a></code> and can be recorded by the
-            <a>MediaRecorder</a>.
+            the <code><a>TVMediaStream</a></code> (<code><a>MediaStream</a></code>)
+            to the <code><a>HTMLMediaElement</a></code> and can be recorded by
+            the <a>MediaRecorder</a>.<br/>
             MUST return <em>null</em> if the TV tuner is not streaming any data,
             which happens when the streaming signal is broken or due to any
-            other reasons that the TV tuner fails to stream the data.
+            reason that makes the TV tuner fail to do so.<br/>
+            Note that the stream instance should be the same even after the
+            current TV source or its selected TV channel has been changed.
           </dd>
 
         <dt>readonly attribute double signalStrength</dt>
@@ -1522,10 +1524,10 @@
           <dd>
             MUST return the channel associated with the TV trigger.
           </dd>
-        <dt>readonly attribute MediaStream? stream</dt>
+        <dt>readonly attribute TVMediaStream? stream</dt>
           <dd>
-            MUST return the MediaStream object that could be played for the TV
-            trigger.
+            MUST return the TVMediaStream object that could be played
+            for the TV trigger.
           </dd>
         <dt>readonly attribute object? additionalData</dt>
           <dd>
@@ -1551,14 +1553,14 @@
         recording) or an error.
       </p>
       <dl title="interface TVRecording" class="idl">
-        <dt>Promise&lt;TVBufferedMediaStream&gt; getStream ()</dt>
+        <dt>Promise&lt;TVMediaStream&gt; getStream ()</dt>
           <dd>
             This method makes a request to retrieve the recorded content as a
-            <a>TVBufferedMediaStream</a> object, which is extended from
+            <a>TVMediaStream</a> object, which is extended from
             <code><a>MediaStream</a></code> and can be played by the
             <code><a>video</a></code> element by
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
-            the <a>TVBufferedMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
+            the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
             MUST return <em>null</em> if the TV recording hasn't actually
             recorded anything. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidAccessError</code> if parental
@@ -1663,7 +1665,7 @@
           </li>
           <ol>
             <li>
-              Let <var>stream</var> be the retrieved <a>TVBufferedMediaStream</a>
+              Let <var>stream</var> be the retrieved <a>TVMediaStream</a>
               object.
             </li>
             <li>
@@ -1739,23 +1741,49 @@
 
     </section>
 
-<!-- - - - - - - - - - - - Interface TVBufferedMediaStream  - - - - - - - - - - - - -->
+<!-- - - - - - - - - - - - Interface TVMediaStream  - - - - - - - - - - - - -->
     <section>
-      <h2><a>TVBufferedMediaStream</a> Interface</h2>
+      <h2><a>TVMediaStream</a> Interface</h2>
       <p>
-        The <a>TVBufferedMediaStream</a> interface is an extended
+        The <a>TVMediaStream</a> interface is an extended
         <code><a>MediaStream</a></code> with a buffered mechanism to support
         basic seekability. It can be played by the <code><a>video</a></code>
         element by
         <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
-        the <a>TVBufferedMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
+        the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
 
       </p>
-      <dl title="interface TVBufferedMediaStream : MediaStream" class="idl">
+      <dl title="interface TVMediaStream : MediaStream" class="idl">
+        <dt>sequence&lt;TextTrack&gt; getTextTracks ()</dt>
+          <dd>
+            MUST return the text tracks in this stream.
+          </dd>
+
+        <dt>void addTextTrack ()</dt>
+          <dd>
+            MUST return the text tracks in this stream.
+            <dl class='parameters'>
+              <dt>TextTrack textTrack</dt>
+                <dd>
+                  Specifies the text track.
+                </dd>
+            </dl>
+          </dd>
+
+        <dt>void removeTextTrack ()</dt>
+          <dd>
+            MUST return the text tracks in this stream.
+            <dl class='parameters'>
+              <dt>TextTrack textTrack</dt>
+                <dd>
+                  Specifies the text track.
+                </dd>
+            </dl>
+          </dd>
       </dl>
 
       <section>
-        <h3><code><a>HTMLMediaElement</a></code> Attributes When Playing a <a>TVBufferedMediaStream</a></h3>
+        <h3><code><a>HTMLMediaElement</a></code> Attributes When Playing a <a>TVMediaStream</a></h3>
 
         <p>
           The nature of no buffering of the <code><a>MediaStream</a></code>
@@ -1763,7 +1791,7 @@
           <a href="http://www.w3.org/TR/mediacapture-streams/#media-element-attributes-when-playing-a-mediastream">restrictions</a>
           on the behavior and attribute values of the associated
           <code><a>HTMLMediaElement</a></code> and on the operations that can be
-          performed on it. Yet since <a>TVBufferedMediaStream</a> is with a
+          performed on it. Yet since <a>TVMediaStream</a> is with a
           buffered mechanism to support basic seekability, it may be less
           restrictive to some extent, as shown below:
         </p>
@@ -1773,7 +1801,7 @@
             <tr>
               <th scope="col">Attribute Name</th>
               <th scope="col">Attribute Type</th>
-              <th scope="col">Valid Values When Using a TVBufferedMediaStream</th>
+              <th scope="col">Valid Values When Using a TVMediaStream</th>
               <th scope="col">Additional considerations</th>
             </tr>
           </thead>
@@ -1791,7 +1819,7 @@
               <td><a class="externalDFN" href="http://www.w3.org/TR/html5/embedded-content-0.html#attr-media-preload"><code>preload</code></a></td>
               <td><code>DOMString</code></td>
               <td>none</td>
-              <td>A <a>TVBufferedMediaStream</a> cannot be preloaded. (Same as <code><a>MediaStream</a></code>.)</td>
+              <td>A <a>TVMediaStream</a> cannot be preloaded. (Same as <code><a>MediaStream</a></code>.)</td>
             </tr>
 
             <tr>
@@ -1805,14 +1833,14 @@
               <td><a class="externalDFN" href="http://www.w3.org/TR/html5/embedded-content-0.html#dom-media-networkstate"><code>networkState</code></a></td>
               <td><code>unsigned short</code></td>
               <td>NETWORK_IDLE</td>
-              <td>The media element does not fetch the <a>TVBufferedMediaStream</a> so there is no network traffic. (Same as <code><a>MediaStream</a></code>.)</td>
+              <td>The media element does not fetch the <a>TVMediaStream</a> so there is no network traffic. (Same as <code><a>MediaStream</a></code>.)</td>
             </tr>
 
             <tr>
               <td><a class="externalDFN" href="http://www.w3.org/TR/html5/embedded-content-0.html#dom-media-readystate"><code>readyState</code></a></td>
               <td><code>unsigned short</code></td>
               <td>HAVE_NOTHING, HAVE_ENOUGH_DATA</td>
-              <td>A <a>TVBufferedMediaStream</a> may be created before there is
+              <td>A <a>TVMediaStream</a> may be created before there is
                   any data available, for example when a stream is received from
                   a remote peer. The value of the <code>readyState</code> of the
                   media element MUST be <em>HAVE_NOTHING</em> before the first
@@ -1883,13 +1911,13 @@
         <h3>Time-shifting</h3>
 
         <p>
-          Applications may utilize <a>TVRecording</a> and <a>TVBufferedMediaStream</a>
+          Applications may utilize <a>TVRecording</a> and <a>TVMediaStream</a>
           to fulfill time-shifting scenarios. When time-shifting is enabled, it
           may add a TV recording for the current playing channel without specifying
           start time, which makes the recording starts from now on, or instead by
           specifying the live TV program. (The user agent should be able to play
           and record the same channel at the same time.) Then when it comes to
-          switch to the time-shifted content, the <a>TVBufferedMediaStream</a>
+          switch to the time-shifted content, the <a>TVMediaStream</a>
           generated from the TV recording can be assigned to the <code><a>video</a></code>
           element used for playing the current <code><a>MediaStream</a></code>.
           So the application may play with the <code><a>video</a></code> element
