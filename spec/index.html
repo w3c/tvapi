@@ -134,11 +134,11 @@
       </p>
 
       <p>
-        The <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-video-element">video</a></dfn>
+        The <dfn><a href="http://www.w3.org/TR/html51/semantics.html#the-video-element">video</a></dfn>
         element, and
-        <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#htmlmediaelement">HTMLMediaElement</a></dfn>, 
-        <dfn><a href="http://www.w3.org/TR/html5/embedded-content-0.html#timeranges">TimeRanges</a></dfn>
-        interfaces are defined in [[!HTML5]].
+        <dfn><a href="http://www.w3.org/TR/html51/semantics.html#htmlmediaelement">HTMLMediaElement</a></dfn>,
+        <dfn><a href="http://www.w3.org/TR/html51/semantics.html#timeranges">TimeRanges</a></dfn>
+        interfaces are defined in [[HTML51]].
       </p>
 
       <p>
@@ -632,8 +632,8 @@
             which can be played by the <code><a>video</a></code> element by
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
             the <code><a>TVMediaStream</a></code> (<code><a>MediaStream</a></code>)
-            to the <code><a>HTMLMediaElement</a></code> and can be recorded by
-            the <a>MediaRecorder</a>.<br/>
+            to the <code><a>HTMLMediaElement</a></code>'s <code>srcObject</code>
+            attribute and can be recorded by the <code><a>MediaRecorder</a></code>.<br/>
             MUST return <em>null</em> if the TV tuner is not streaming any data,
             which happens when the streaming signal is broken or due to any
             reason that makes the TV tuner fail to do so.<br/>
@@ -1726,7 +1726,8 @@
         basic seekability. It can be played by the <code><a>video</a></code>
         element by
         <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
-        the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
+        the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>'s
+        <code>srcObject</code> attribute.
 
       </p>
       <dl title="interface TVMediaStream : MediaStream" class="idl">
