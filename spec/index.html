@@ -878,7 +878,7 @@
             method <a><code>getChannels</code></a> can retrieve the channels
             that have successfully been scanned by the TV source. Besides, due
             to some constraints of tuner modules, scanning and streaming are not
-            encouraged to run at the same time.  
+            encouraged to run at the same time.
             <dl class='parameters'>
               <dt>optional TVStartScanningOptions options</dt>
                 <dd>
@@ -1286,13 +1286,13 @@
 
         <dt>readonly attribute DOMString? casSystemId</dt>
           <dd>
-            MUST return the CAS System ID used to decrypt stream from the encrypted TV channel. 
+            MUST return the CAS System ID used to decrypt stream from the encrypted TV channel.
             Note, the value is null, if there is no <code> casSystemId </code> in used.
           </dd>
 
         <dt>readonly attribute unsigned short casCardInUse</dt>
           <dd>
-            MUST return the the slot number of the CI(Common Interface) CARD used to decrypt stream from the encrypted TV channel. 
+            MUST return the the slot number of the CI(Common Interface) CARD used to decrypt stream from the encrypted TV channel.
             Note, the value is <code> "0" </code>, if no CI CARD is in used.
           </dd>
 
@@ -1809,22 +1809,20 @@
 
         <dt>void addTextTrack ()</dt>
           <dd>
-            MUST return the text tracks in this stream.
             <dl class='parameters'>
               <dt>TextTrack textTrack</dt>
                 <dd>
-                  Specifies the text track.
+                  The TextTrack object to be added.
                 </dd>
             </dl>
           </dd>
 
         <dt>void removeTextTrack ()</dt>
           <dd>
-            MUST return the text tracks in this stream.
             <dl class='parameters'>
               <dt>TextTrack textTrack</dt>
                 <dd>
-                  Specifies the text track.
+                  The TextTrack object to be removed.
                 </dd>
             </dl>
           </dd>
@@ -1985,7 +1983,7 @@
     <section>
       <h2><a>TVCICard</a> Interface</h2>
       <p>
-        The <a>TVCICard</a> interface represents a bunch of properties 
+        The <a>TVCICard</a> interface represents a bunch of properties
         related to CI(Common Interface) Card which is used to decrypt encrypted TV channel.
       </p>
       <dl title="interface TVCICard" class="idl">
