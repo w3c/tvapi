@@ -7,7 +7,7 @@
       specStatus:          "CG-DRAFT", // "ED",
       shortName:           "tvapi", // needed for generated URLs
       editors: [{
-        name: "SungHei Kim",
+        name: "Sung Hei Kim",
         company: "ETRI",
         mailto: "shkim@etri.re.kr"
       }, {
@@ -269,6 +269,13 @@
             </dl>
           </dd>
 
+        <dt>Promise&lt;sequence&lt;TVCICard&gt;&gt; getCICards ()</dt>
+          <dd>
+            This method makes a request to retrieve list of CI(Common Interface) CARD(s) available in the TV device(i.e. STB).
+            It returns a new <code><a>Promise</a></code> that will be used to notify
+            the caller about the result of the operation, which is an array of <a>TVCICard</a> elements.
+          </dd>
+
         <dt>readonly attribute unsigned long long totalRecordingSize</dt>
           <dd>
             MUST return the total recording size of the TV device.
@@ -285,6 +292,7 @@
             is system-widely applied to the TV device. Once the parental control
             is unset, all the locked TV channels/programs will become accesible.
           </dd>
+
 
         <dt class="no-docs">
           attribute EventHandler ontunerchanged
@@ -310,6 +318,14 @@
           <dd>
             Handles the <code>parentalcontrolchanged</code> event, fired when
             the parental control status is changed.
+          </dd>
+
+        <dt class="no-docs">
+          attribute EventHandler onCIcardchanged
+        </dt>
+          <dd>
+            Handles the <code>CIcardchanged</code> event, fired when
+            the CI(Common Interface) card status is changed.
           </dd>
       </dl>
 
@@ -524,6 +540,42 @@
           </ol>
         </ol>
 
+        <p>
+          The <dfn><code>getCICards</code></dfn> method when invoked MUST run
+          the following steps:
+        </p>
+        <ol>
+          <li>
+            Let <var>promise</var> be a new <code><a>Promise</a></code> object and
+            <var>resolver</var> be its associated <code>resolver</code>.
+          </li>
+          <li>
+            Return <var>promise</var> to the caller.
+          </li>
+          <li>
+            Make a request to the TV device to retrieve all CI(Common Interface) Card(s) that
+            are available in the TV device.
+          </li>
+          <li>
+            If an <var>error</var> occurs invoke <em>resolver</em>'s <a
+            class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
+            with <em>error</em> as the <code>value</code> argument.
+          </li>
+          <li>
+            When the request has been successfully completed:
+          </li>
+          <ol>
+            <li>
+              Let <var>cicards</var> be the array of the retrieved <a>TVCICard</a>
+              elements.
+            </li>
+            <li>
+              Invoke <em>resolver</em>'s <a
+              class="internalDFN" href="#dfn-fulfill-algorithm"> fulfill algorithm</a>
+              with <em>cicards</em> as the <code>value</code> argument.
+            </li>
+          </ol>
+        </ol>
       </section>
 
       <section>
@@ -566,6 +618,13 @@
               <td><a><code>Event</code></a></td>
               <td>
                 Handles the information of the status changes for parental control.
+              </td>
+            <tr>
+              <td><strong><code>onCIcardchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">CIcardchanged</dfn></code></td>
+              <td><a><code>TVCICardChangedEvent</code></a></td>
+              <td>
+                Handles the information of the status changes of the TV CI(Common Interface) card(s) in the TV device.
               </td>
             </tr>
           </tbody>
@@ -819,7 +878,7 @@
             method <a><code>getChannels</code></a> can retrieve the channels
             that have successfully been scanned by the TV source. Besides, due
             to some constraints of tuner modules, scanning and streaming are not
-            encouraged to run at the same time.  
+            encouraged to run at the same time.
             <dl class='parameters'>
               <dt>optional TVStartScanningOptions options</dt>
                 <dd>
@@ -1223,6 +1282,18 @@
         <dt>readonly attribute boolean isFree</dt>
           <dd>
             MUST indicate whether the TV channel is free to watch.
+          </dd>
+
+        <dt>readonly attribute DOMString? casSystemId</dt>
+          <dd>
+            MUST return the CAS System ID used to decrypt stream from the encrypted TV channel.
+            Note, the value is null, if there is no <code> casSystemId </code> in used.
+          </dd>
+
+        <dt>readonly attribute unsigned short casCardInUse</dt>
+          <dd>
+            MUST return the the slot number of the CI(Common Interface) CARD used to decrypt stream from the encrypted TV channel.
+            Note, the value is <code> "0" </code>, if no CI CARD is in used.
           </dd>
 
         <dt>readonly attribute boolean isParentalLocked</dt>
@@ -1738,22 +1809,20 @@
 
         <dt>void addTextTrack ()</dt>
           <dd>
-            MUST return the text tracks in this stream.
             <dl class='parameters'>
               <dt>TextTrack textTrack</dt>
                 <dd>
-                  Specifies the text track.
+                  The TextTrack object to be added.
                 </dd>
             </dl>
           </dd>
 
         <dt>void removeTextTrack ()</dt>
           <dd>
-            MUST return the text tracks in this stream.
             <dl class='parameters'>
               <dt>TextTrack textTrack</dt>
                 <dd>
-                  Specifies the text track.
+                  The TextTrack object to be removed.
                 </dd>
             </dl>
           </dd>
@@ -1908,6 +1977,29 @@
         </p>
       </section>
 
+    </section>
+
+<!-- - - - - - - - - - - - Interface TVCICard - - - - - - - - - - - - -->
+    <section>
+      <h2><a>TVCICard</a> Interface</h2>
+      <p>
+        The <a>TVCICard</a> interface represents a bunch of properties
+        related to CI(Common Interface) Card which is used to decrypt encrypted TV channel.
+      </p>
+      <dl title="interface TVCICard" class="idl">
+        <dt>readonly attribute TVCICardState ciCardState</dt>
+          <dd>
+            MUST return the type of CI Card State
+          </dd>
+        <dt>readonly attribute DOMString casSystemId</dt>
+          <dd>
+            MUST return the CAS system ID for the pertaining CI card.
+          </dd>
+        <dt>readonly attribute Boolean isInUse</dt>
+          <dd>
+            MUST indicate whether the CI Card is in use to decrypt certain TV channel(s).
+          </dd>
+      </dl>
     </section>
 
 <!-- - - - - - - - - - - - Dictionary TVStartScanningOptions   - - - - - - - -->
@@ -2186,6 +2278,26 @@
       </dl>
     </section>
 
+<!-- - - - - - - - - - Interface TVCICardChangedEvent - - - - - - - - - - -->
+    <section>
+      <h2><a>TVCICardChangedEvent</a> Interface</h2>
+      <p>
+        The <a>TVCICardChangedEvent</a> interface represents the event related
+        to the changes in the state of the CI(Common Interface) card.
+      </p>
+      <dl title="interface TVCICardChangedEvent : Event" class="idl">
+        <dt>readonly attribute TVCICardState state</dt>
+          <dd>
+            MUST return the type of changed state of the pertaining <code>casSystemId</code>.
+          </dd>
+
+        <dt>readonly attribute DOMString casSystemId</dt>
+          <dd>
+            MUST return the CAS System ID that has been changed.
+          </dd>
+      </dl>
+    </section>
+
 <!-- - - - - - - - - - - - Interface Enumerations  - - - - - - - - - - - - - -->
     <section>
       <h2>Enumerations</h2>
@@ -2416,6 +2528,32 @@
           <dd>
             The state of recording is stopped from <code>scheduled</code> or
             canceled from <code>recording</code>.
+          </dd>
+      </dl>
+
+      <p>
+        The attribute <code>state</code> in <a>TVCICard</a> can have the
+        following values:
+      </p>
+      <dl title="enum TVCICardState" class="idl">
+        <dt>CIcard-insert</dt>
+          <dd>
+            The state CI card is inserted.
+          </dd>
+
+        <dt>CIcard-accepted</dt>
+          <dd>
+            The state CI card has been accepted.
+          </dd>
+
+        <dt>CIcard-removed</dt>
+          <dd>
+            The state CI card is removed.
+          </dd>
+
+        <dt>CIcard-error</dt>
+          <dd>
+            The state that CI Card has error.
           </dd>
       </dl>
 
