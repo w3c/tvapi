@@ -271,7 +271,8 @@
 
         <dt>Promise&lt;sequence&lt;TVCICard&gt;&gt; getCICards ()</dt>
           <dd>
-            This method makes a request to retrieve list of CI(Common Interface) CARD(s) available in the TV device(i.e. STB).
+            This method makes a request to retrieve a list of CI (Common Interface)
+            cards available in the TV device (e.g. set-top box).
             It returns a new <code><a>Promise</a></code> that will be used to notify
             the caller about the result of the operation, which is an array of <a>TVCICard</a> elements.
           </dd>
@@ -321,11 +322,11 @@
           </dd>
 
         <dt class="no-docs">
-          attribute EventHandler onCIcardchanged
+          attribute EventHandler oncicardchanged
         </dt>
           <dd>
-            Handles the <code>CIcardchanged</code> event, fired when
-            the CI(Common Interface) card status is changed.
+            Handles the <code>cicardchanged</code> event, fired when
+            the CI (Common Interface) card status is changed.
           </dd>
       </dl>
 
@@ -553,8 +554,8 @@
             Return <var>promise</var> to the caller.
           </li>
           <li>
-            Make a request to the TV device to retrieve all CI(Common Interface) Card(s) that
-            are available in the TV device.
+            Make a request to the TV device to retrieve all the CI (Common Interface)
+            cards that are available in the TV device.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -620,11 +621,11 @@
                 Handles the information of the status changes for parental control.
               </td>
             <tr>
-              <td><strong><code>onCIcardchanged</code></strong></td>
-              <td><code><dfn id="dfn-change-event">CIcardchanged</dfn></code></td>
+              <td><strong><code>oncicardchanged</code></strong></td>
+              <td><code><dfn id="dfn-change-event">cicardchanged</dfn></code></td>
               <td><a><code>TVCICardChangedEvent</code></a></td>
               <td>
-                Handles the information of the status changes of the TV CI(Common Interface) card(s) in the TV device.
+                Handles the information of the status changes of the TV CI (Common Interface) card in the TV device.
               </td>
             </tr>
           </tbody>
@@ -1286,14 +1287,9 @@
 
         <dt>readonly attribute DOMString? casSystemId</dt>
           <dd>
-            MUST return the CAS System ID used to decrypt stream from the encrypted TV channel.
-            Note, the value is null, if there is no <code> casSystemId </code> in used.
-          </dd>
-
-        <dt>readonly attribute unsigned short casCardInUse</dt>
-          <dd>
-            MUST return the the slot number of the CI(Common Interface) CARD used to decrypt stream from the encrypted TV channel.
-            Note, the value is <code> "0" </code>, if no CI CARD is in used.
+            MUST return the system ID if it requires to use a specific
+            CAS (Conditional Access System) to decrypt the stream from the
+            encrypted TV channel.
           </dd>
 
         <dt>readonly attribute boolean isParentalLocked</dt>
@@ -1987,17 +1983,19 @@
         related to CI(Common Interface) Card which is used to decrypt encrypted TV channel.
       </p>
       <dl title="interface TVCICard" class="idl">
-        <dt>readonly attribute TVCICardState ciCardState</dt>
+        <dt>readonly attribute TVCICardState state</dt>
           <dd>
-            MUST return the type of CI Card State
+            MUST return the state of the CI card.
           </dd>
         <dt>readonly attribute DOMString casSystemId</dt>
           <dd>
-            MUST return the CAS system ID for the pertaining CI card.
+            MUST return the CAS (Conditional Access System) system ID for the pertaining CI card.
           </dd>
-        <dt>readonly attribute Boolean isInUse</dt>
+        <dt>readonly attribute boolean isInUse</dt>
           <dd>
-            MUST indicate whether the CI Card is in use to decrypt certain TV channel(s).
+            MUST indicate whether the CI card is in use. Note that if multiple
+            cards happen to represent the same <a>casSystemId</a>, at most one
+            of them can have this attribute set.
           </dd>
       </dl>
     </section>
@@ -2283,17 +2281,17 @@
       <h2><a>TVCICardChangedEvent</a> Interface</h2>
       <p>
         The <a>TVCICardChangedEvent</a> interface represents the event related
-        to the changes in the state of the CI(Common Interface) card.
+        to the changes in the state of the CI (Common Interface) card.
       </p>
       <dl title="interface TVCICardChangedEvent : Event" class="idl">
         <dt>readonly attribute TVCICardState state</dt>
           <dd>
-            MUST return the type of changed state of the pertaining <code>casSystemId</code>.
+            MUST return the updated state of the card.
           </dd>
 
         <dt>readonly attribute DOMString casSystemId</dt>
           <dd>
-            MUST return the CAS System ID that has been changed.
+            MUST return the CAS (Conditional Access System) system ID of the card.
           </dd>
       </dl>
     </section>
@@ -2536,24 +2534,24 @@
         following values:
       </p>
       <dl title="enum TVCICardState" class="idl">
-        <dt>CIcard-insert</dt>
+        <dt>inserted</dt>
           <dd>
-            The state CI card is inserted.
+            The CI card is inserted.
           </dd>
 
-        <dt>CIcard-accepted</dt>
+        <dt>accepted</dt>
           <dd>
-            The state CI card has been accepted.
+            The CI card is accepted.
           </dd>
 
-        <dt>CIcard-removed</dt>
+        <dt>removed</dt>
           <dd>
-            The state CI card is removed.
+            The CI card is removed.
           </dd>
 
-        <dt>CIcard-error</dt>
+        <dt>error</dt>
           <dd>
-            The state that CI Card has error.
+            The CI Card has encountered an error.
           </dd>
       </dl>
 
