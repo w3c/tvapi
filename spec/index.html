@@ -961,7 +961,7 @@
             the TV channels is changed by the TV source. E.g., it can be fired
             when the method <a><code>startScanning</code></a> or the method
             <a><code>stopScanning</code></a> starts or stops scanning the TV
-            channels.
+            channels, or when a channel is found during the channel scan.
           </dd>
       </dl>
 
@@ -2222,7 +2222,7 @@
         <dt>readonly attribute TVChannel? channel</dt>
            <dd>
             MUST return the TV channel that is scanned by the TV source. MUST
-            return <em>null</em> if the <code>state</code> is not specified as
+            return <em>null</em> if the <code>state</code> is not
             <code>"scanned"</code>.
            </dd>
       </dl>
@@ -2447,25 +2447,26 @@
       <dl title="enum TVScanningState" class="idl">
         <dt>cleared</dt>
           <dd>
-            The state of scanning the TV channels is cleared by the TV source,
-            which means all the currently scanned TV channels are cleared before
-            scanning.
+            The currently scanned TV channels have been cleared. This event
+            may be fired before a channel scan is started.
           </dd>
 
         <dt>scanned</dt>
           <dd>
-            The state of scanning the TV channels is scanned, which means a TV
-            channel is successfully scanned by the TV source.
+            A TV channel has been found by the TV source during the channel
+            scan. The <code>channel</code> attribute in the
+            <code>TVScanningStateChangedEvent</code> object references the
+            channel found.
           </dd>
 
         <dt>completed</dt>
           <dd>
-            The state of scanning the TV channels is completed by the TV source.
+            The channel scan has completed.
           </dd>
 
         <dt>stopped</dt>
           <dd>
-            The state of scanning the TV channels is stopped by the TV source.
+            The channel scan has been stopped.
           </dd>
       </dl>
 
