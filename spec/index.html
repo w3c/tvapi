@@ -179,7 +179,7 @@
 
         <dt>Promise&lt;TVRecording&gt; addRecording ()</dt>
           <dd>
-            This method is to add a recording request for a given channel with
+            This method adds a recording request for a given channel with
             explicitly specified start time and end time, or instead an
             associated <a>TVProgram</a> object. It returns a new
             <code><a>Promise</a></code> that will be used to notify the caller
@@ -188,10 +188,10 @@
             Please note the user agent should have a recording scheduler which
             handles time conflicts between recording requests. If this method
             tries to add a new request with a time frame overlapped with some
-            existent ones, and given suffiecient resource (i.e. tuner), a new TV
+            existent ones, and given sufficient resource (i.e. tuner), a new TV
             recording should be created and the scheduler should ensure multiple
-            TV recordings to run at the same time. However, if the resource is
-            not suffiecient to meet the new request, the <code><a>Promise</a></code>
+            TV recordings run at the same time. However, if the resource is
+            not sufficient to meet the new request, the <code><a>Promise</a></code>
             should be rejected. Applications may handle this situation with
             their own strategy, such as explicitly removing the conflicts and
             re-adding the one to conserve.
@@ -205,13 +205,13 @@
 
         <dt>Promise&lt;void&gt; removeRecording ()</dt>
           <dd>
-            This method makes a request to remove a given record. It returns a
+            This method makes a request to remove a given recording. It returns a
             new <code><a>Promise</a></code> that will be used to notify the
             caller about the result of the operation.
             <dl class='parameters'>
               <dt>DOMString id</dt>
                 <dd>
-                  Specifies the ID of the removing recording.
+                  Specifies the ID of the recording to be removed.
                 </dd>
             </dl>
           </dd>
@@ -223,7 +223,7 @@
             <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation.
             <dl class='parameters'>
-              <dt>optional TVGetRecordingsOptions option</dt>
+              <dt>optional TVGetRecordingsOptions options</dt>
                 <dd>
                   Specifies the options for getting recordings.
                 </dd>
@@ -237,7 +237,7 @@
             <code>Promise</code> that will be used to notify the caller about
             the result of the operation. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidAccessError</code> if the old PIN
-            mismatches the current one.
+            does not match the current one.
             <dl class='parameters'>
               <dt>DOMString oldPin</dt>
                 <dd>
@@ -256,7 +256,7 @@
             It returns a new <code>Promise</code> that will be used to notify
             the caller about the result of the operation. Note that the
             <code><a>Promise</a></code> may be rejected with an
-            <code>InvalidAccessError</code> if the PIN mismatches the current one.
+            <code>InvalidAccessError</code> if the PIN does not match the current one.
             <dl class='parameters'>
               <dt>DOMString pin</dt>
                 <dd>
@@ -290,8 +290,8 @@
         <dt>readonly attribute boolean isParentalControlled</dt>
           <dd>
             MUST return the current state of the TV parental control, which
-            is system-widely applied to the TV device. Once the parental control
-            is unset, all the locked TV channels/programs will become accesible.
+            is applied system-wide to the TV device. Once the parental control
+            is unset, all the locked TV channels/programs will become accessible.
           </dd>
 
 
@@ -383,7 +383,8 @@
             Return <var>promise</var> to the caller.
           </li>
           <li>
-            Make a recording request to the TV recording scheduler.
+            Make a recording request to the TV recording scheduler according to the
+            <code>options</code> parameter.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -452,7 +453,7 @@
           </li>
           <li>
             Make a request to the recording scheduler to retrieve the available
-            TV recordings.
+            TV recordings according to the <code>options</code> parameter.
           </li>
           <li>
             If an <var>error</var> occurs invoke <em>resolver</em>'s <a
@@ -857,7 +858,7 @@
             new <code><a>Promise</a></code> that will be used to notify the caller
             about the result of the operation. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidStateError</code> if this
-            method gets called during channel scanning, or be rejected with an
+            method is called during channel scanning, or be rejected with an
             <code>InvalidAccessError</code> if parental control is enabled and
             the channel is locked.
             <dl class='parameters'>
@@ -960,7 +961,7 @@
             the TV channels is changed by the TV source. E.g., it can be fired
             when the method <a><code>startScanning</code></a> or the method
             <a><code>stopScanning</code></a> starts or stops scanning the TV
-            channels.
+            channels, or when a channel is found during the channel scan.
           </dd>
       </dl>
 
@@ -1055,7 +1056,7 @@
             scanning options specified in the <code>options</code> parameter. If
             the <code>isRescanned</code> option in the <code>options</code>
             parameter is not passed or it is passed as <code>true</code>, the
-            <a class="internalDFN" href="#dfn-user-agent">user agent</a> has to
+            <a class="internalDFN" href="#dfn-user-agent">user agent</a> MUST
             clear the currently scanned TV channels before scanning; if it is
             passed as <code>false</code>, the
             <a class="internalDFN" href="#dfn-user-agent">user agent</a> will
@@ -1360,7 +1361,7 @@
             Return <var>promise</var> to the caller.
           </li>
           <li>
-            Make a request to the TV channel to retrieve all the current TV
+            Make a request to the TV channel to retrieve the current TV
             program available in the TV channel.
           </li>
           <li>
@@ -1400,7 +1401,7 @@
             according to the <code>isLocked</code> parameter.
           </li>
           <li>
-            If the <code>pin</code> parameter mismatches the current PIN
+            If the <code>pin</code> parameter does not match the current PIN
             or an <var>error</var> occurs invoke <em>resolver</em>'s
             <a class="internalDFN" href="#dfn-reject-algorithm">reject algorithm</a>
             with <em>error</em> as the <code>value</code> argument.
@@ -1540,7 +1541,7 @@
         The <a>TVTriggerCue</a> interface represents a bunch of properties and
         a set of operations related to the TV trigger, which may be used to
         carry some information via in-band or out-of-band mechanism based on the
-        current playing content. It's inherited from
+        current playing content. It's inherited from the
         <code><a>TextTrackCue</a></code> interface, which requires
         <code>startTime</code> and <code>endTime</code>, and can be accessed by
         the <code><a>video</a></code> element by adding the
@@ -1574,7 +1575,7 @@
           </dd>
         <dt>readonly attribute object? additionalData</dt>
           <dd>
-            MUST return the conten source information or other supplemental
+            MUST return the content source information or other supplemental
             information for the TV trigger. Please note that the detailed data
             might vary between different broadcasting standards or only known by
             private agreements.
@@ -1590,10 +1591,10 @@
         a set of operations related to the TV recording. The recording should
         automatically start recording at the specified start time. And it may
         stop either at the specified end time, by an explicit <code>stop()</code>
-        call, or get interrupted by the user agent due to a channel switch
-        against required underlying resource (i.e. the same tuner which the
+        call, or be interrupted by the user agent due to a channel switch
+        against the required underlying resource (i.e. the same tuner which the
         recording channel belongs to since watching takes priority over
-        recording) or an error.
+        recording), or an error.
       </p>
       <dl title="interface TVRecording" class="idl">
         <dt>Promise&lt;TVMediaStream&gt; getStream ()</dt>
@@ -1603,7 +1604,8 @@
             <code><a>MediaStream</a></code> and can be played by the
             <code><a>video</a></code> element by
             <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
-            the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>.
+            the <a>TVMediaStream</a> to the <code><a>HTMLMediaElement</a></code>'s
+            <code>srcObject</code> attribute.
             MUST return <em>null</em> if the TV recording hasn't actually
             recorded anything. Note that the <code><a>Promise</a></code>
             may be rejected with an <code>InvalidAccessError</code> if parental
@@ -1789,7 +1791,7 @@
       <h2><a>TVMediaStream</a> Interface</h2>
       <p>
         The <a>TVMediaStream</a> interface is an extended
-        <code><a>MediaStream</a></code> with a buffered mechanism to support
+        <code><a>MediaStream</a></code> with a buffering mechanism to support
         basic seekability. It can be played by the <code><a>video</a></code>
         element by
         <a href="http://www.w3.org/TR/mediacapture-streams/#direct-assignment-to-media-elements">assigning</a>
@@ -1980,7 +1982,7 @@
       <h2><a>TVCICard</a> Interface</h2>
       <p>
         The <a>TVCICard</a> interface represents a bunch of properties
-        related to CI(Common Interface) Card which is used to decrypt encrypted TV channel.
+        related to CI (Common Interface) card which is used to decrypt encrypted TV channel.
       </p>
       <dl title="interface TVCICard" class="idl">
         <dt>readonly attribute TVCICardState state</dt>
@@ -2220,7 +2222,7 @@
         <dt>readonly attribute TVChannel? channel</dt>
            <dd>
             MUST return the TV channel that is scanned by the TV source. MUST
-            return <em>null</em> if the <code>state</code> is not specified as
+            return <em>null</em> if the <code>state</code> is not
             <code>"scanned"</code>.
            </dd>
       </dl>
@@ -2445,25 +2447,26 @@
       <dl title="enum TVScanningState" class="idl">
         <dt>cleared</dt>
           <dd>
-            The state of scanning the TV channels is cleared by the TV source,
-            which means all the currently scanned TV channels are cleared before
-            scanning.
+            The currently scanned TV channels have been cleared. This event
+            may be fired before a channel scan is started.
           </dd>
 
         <dt>scanned</dt>
           <dd>
-            The state of scanning the TV channels is scanned, which means a TV
-            channel is successfully scanned by the TV source.
+            A TV channel has been found by the TV source during the channel
+            scan. The <code>channel</code> attribute in the
+            <code>TVScanningStateChangedEvent</code> object references the
+            channel found.
           </dd>
 
         <dt>completed</dt>
           <dd>
-            The state of scanning the TV channels is completed by the TV source.
+            The channel scan has completed.
           </dd>
 
         <dt>stopped</dt>
           <dd>
-            The state of scanning the TV channels is stopped by the TV source.
+            The channel scan has been stopped.
           </dd>
       </dl>
 
@@ -2559,7 +2562,11 @@
     <section>
       <h2>Acknowledgements</h2>
       <p>
-        To be constructed.
+        The following people have contributed to this draft specification
+        through their participation in the TV Control API Community Group:
+        Kazayuki Ashimura, Marco Chen, Daniel Davis, Francois Daoust,
+        Yoshiharu Dewa, Paul Higgs, Bin Hu, Shelly Lin, Sangwhan Moon,
+        Chris Needham, John Piesing.
       </p>
     </section>
 
