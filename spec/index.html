@@ -42,7 +42,15 @@
       inlineCSS:    true,
       noIDLIn:      true,
       noIDLSorting: true,
-      copyrightStart: "2014"
+      copyrightStart: "2014",
+      localBiblio: {
+        "ISO639-2": {
+          title: "Codes for the representation of names of languages -- Part 2: Alpha-3 code",
+          href: "http://www.iso.org/iso/catalogue_detail?csnumber=4767",
+          publisher:  "ISO",
+          date: "22 October 1998"
+        }
+      }
     };
     </script>
 </head>
@@ -1464,15 +1472,13 @@
         <dt>sequence&lt;DOMString&gt; getAudioLanguages ()</dt>
           <dd>
             MUST return the audio languages of the TV program in 3-digit
-            language codes specified by
-            <a href="http://www.iso.org/iso/catalogue_detail?csnumber=4767">ISO 639-2</a>.
+            language codes specified by [[!ISO639-2]].
           </dd>
 
         <dt>sequence&lt;DOMString&gt; getSubtitleLanguages ()</dt>
           <dd>
             MUST return the subtitle languages of the TV program in 3-digit
-            language codes specified by
-            <a href="http://www.iso.org/iso/catalogue_detail?csnumber=4767">ISO 639-2</a>.
+            language codes specified by [[!ISO639-2]].
           </dd>
 
         <dt>sequence&lt;DOMString&gt; getGenres ()</dt>
